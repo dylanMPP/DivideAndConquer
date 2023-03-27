@@ -9,6 +9,9 @@ class DivideAndConquerTest extends munit.FunSuite {
   def sortedList = List(1,2,3,10,22)
   def voidList = List()
 
+  def normalSetPoints = List(List(0,0), List(2,6), List(-1, -5), List(1, 8), List(-2, 1))
+  def repeatedSetPoints = List(List(0,0), List(2,6), List(-1, -5), List(1, 8), List(1, 8))
+
 
   test("Number Of Inversions:") {
     assert(DivideAndConquer.numberOfInversions(normalList)==4)
@@ -25,7 +28,7 @@ class DivideAndConquerTest extends munit.FunSuite {
   }
 
   test("Closest Points:"){
-
+    assert
 
 
   }

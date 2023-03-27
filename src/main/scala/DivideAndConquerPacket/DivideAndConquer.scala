@@ -4,6 +4,7 @@ import scala.annotation.tailrec
 
 object DivideAndConquer extends App with IDivideAndConquer {
 
+
   // NUMBER OF INVERSIONS -> Returns the number of inversions that are necessary to get the sorted list
   def numberOfInversions(list: List[Int]): Int =
     0
@@ -25,13 +26,16 @@ object DivideAndConquer extends App with IDivideAndConquer {
       val secondPow = pow(difference(secondPair(1), firstPair(1)), 2)
 
       val result = sum(firstPow, secondPow)
-      result
+      squareRoot(result)
     }
 
   // PREDECESOR AND SUCESOR
   def pred(n: Int): Int = if (n > 0) n - 1 else 0
 
   def suc(n: Int): Int = n + 1
+
+  // ABS
+  def abs(x: Double) = if (x >= 0) x else -x
 
   // SUM
   def sum(number: Int, number2: Int): Int =
@@ -46,6 +50,20 @@ object DivideAndConquer extends App with IDivideAndConquer {
   def pow(base: Int, exp: Int): Int =
     if (exp == 0) 1 else base * pow(base, pred(exp))
 
+  // SQRT METHODS
+  def upgrade(number: Double, aprox: Double) =
+    ((aprox + number) / aprox) / 2
+
+  def isGoodEstimation(number: Double, aprox: Double) =
+    abs(aprox*aprox - number) < 0.001
+
+  @tailrec
+  def iterativeSquareRoot(number: Double, aprox: Double) : Double =
+    if(isGoodEstimation(number, aprox)) aprox
+    else iterativeSquareRoot(number, upgrade(number, aprox))
+
+  def squareRoot(number: Double) : Double = iterativeSquareRoot(number, 1)
+  // END OF SQRT METHODS
 
   // MERGE SORT
   def mergeSort(): Unit = {
