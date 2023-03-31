@@ -234,9 +234,9 @@ It's important to know that the `pred(...)` function, only works for positive in
 ### Test Cases
 | Test Case | Input Number | Expected Result |
 |-----------|--------------|-----------------|
-| 1         | 2 | 1 |
-| 2         | 0 | 0 |
-| 3         | -1 | 0 |
+| 1         | number1 | 1 |
+| 2         | number2 | 0 |
+| 3         | number3 | 0 |
 
 ### Expected Results
 We expect all assertions to pass successfully, indicating that the `pred(...)` function is returning the expected value for each number.
