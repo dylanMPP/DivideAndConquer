@@ -4,26 +4,48 @@ import scala.annotation.tailrec
 
 object DivideAndConquer extends App with IDivideAndConquer {
 
-
   // NUMBER OF INVERSIONS -> Returns the number of inversions that are necessary to get the sorted list
-  def numberOfInversions(list: List[Int]): Int =
-    0
+  def numberOfInversions(list: List[Int]): Int = ???
 
   // IMPROVING QUICKSORT -> Returns the sorted list using quicksort, using a 3-way partition instead of a 2-way
-  def improvingQuickSort(list: List[Int]): List[Int] =
-    List()
+  def improvingQuickSort(list: List[Int]): List[Int] = ???
 
   // CLOSEST POINTS -> Returns the closest points of a list of points (the points are pair of int numbers)
-  def closestPoints(list: List[List[Int]]): Double =
-    0.0
+  def closestPoints(list: List[List[Int]]): Double = ???
 
   // EUCLIDEAN DISTANCE -> Returns the distance between 2 points (pairs of int numbers) using the euclidean method
   def euclideanDistance(firstPair: List[Int], secondPair: List[Int]): Double =
     if (firstPair.length != 2 || secondPair.length != 2) {
       -1.0
     } else {
-      val firstPow = pow(difference(secondPair.head, firstPair.head), 2)
-      val secondPow = pow(difference(secondPair(1), firstPair(1)), 2)
+      var firstPow = -1
+      var secondPow = -1
+
+      // We make verifications, for the difference when there are negative numbers or the difference result is a negative
+      // number
+      if(secondPair.head < 0 && firstPair.head > 0){
+        firstPow = pow(sum(secondPair.head, firstPair.head), 2)
+      }
+
+      if(secondPair(1) < 0 && firstPair(1) > 0){
+        secondPow = pow(sum(secondPair.head, firstPair.head), 2)
+      }
+
+      if(firstPow == -1 && firstPair.head != 0 && secondPair.head < firstPair.head){
+        firstPow = pow(difference(firstPair.head, secondPair.head), 2)
+      }
+
+      if (secondPow == -1 && firstPair(1) != 0 && secondPair(1) < firstPair(1)) {
+        secondPow = pow(difference(firstPair(1), secondPair(1)), 2)
+      }
+
+      if(firstPow == -1) {
+        firstPow = pow(difference(secondPair.head, firstPair.head), 2)
+      }
+
+      if(secondPow == -1){
+        secondPow = pow(difference(secondPair(1), firstPair(1)), 2)
+      }
 
       val result = sum(firstPow, secondPow)
       squareRoot(result)
@@ -52,7 +74,7 @@ object DivideAndConquer extends App with IDivideAndConquer {
 
   // SQRT METHODS
   def upgrade(number: Double, aprox: Double) =
-    ((aprox + number) / aprox) / 2
+    (aprox + number / aprox) / 2
 
   def isGoodEstimation(number: Double, aprox: Double) =
     abs(aprox*aprox - number) < 0.001
@@ -62,33 +84,15 @@ object DivideAndConquer extends App with IDivideAndConquer {
     if(isGoodEstimation(number, aprox)) aprox
     else iterativeSquareRoot(number, upgrade(number, aprox))
 
-  def squareRoot(number: Double) : Double = iterativeSquareRoot(number, 1)
+  def squareRoot(number: Double): Double = iterativeSquareRoot(number, 1)
   // END OF SQRT METHODS
 
   // MERGE SORT
-  def mergeSort(): Unit = {
+  def mergeSort(list: List[Int]): List[Int] = ???
 
-  }
+  def merge(l1: List[Int], l2: List[Int]) = ???
 
-  // QUICKSORT PARTITION
-  /* def partition(list: List[Int], firstPosition: Int, lastPosition: Int, resultList: List[Int]): Unit =
+  def quickSort(list:List[Int], firstPos:Int, lastPos:Int): List[Int] = ???
 
-    val x = list(lastPosition)
-    val i = firstPosition - 1
-    val stop =  list.length-1
-
-    @tailrec
-    def recursiveFor(resultList: List[Int], position: Int): List[Int] ={
-      if(position == stop){
-        resultList
-      } else {
-        if (list(firstPosition) <= x)
-          recursiveFor(list, position + 1)
-        else
-          recursiveFor(list.updated(i, position), position + 1)
-      }
-    }
-
-    resultList = recursiveFor(list, firstPosition)
-    */
+  def quickSortPartition(list: List[Int], firstPos: Int, lastPos: Int): Int = ???
 }
