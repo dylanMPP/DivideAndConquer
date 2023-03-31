@@ -82,17 +82,17 @@ class DivideAndConquerTest extends munit.FunSuite {
 
   val number1ToSquareRoot: Int = 4
   val number2ToSquareRoot: Int = 2
-  val number3ToSquareRoot: Int = 1
+  val number3ToSquareRoot: Int = 0
 
   test("Square Root:") {
-    assert(df.format(DivideAndConquer.squareRoot(number2ToSquareRoot)) == "1,4142")
     assert(df.format(DivideAndConquer.squareRoot(number1ToSquareRoot)) == "2,0000")
-    assert(df.format(DivideAndConquer.squareRoot(number3ToSquareRoot)) == "1,0000")
+    assert(df.format(DivideAndConquer.squareRoot(number2ToSquareRoot)) == "1,4142")
+    assert(df2.format(DivideAndConquer.squareRoot(number3ToSquareRoot)) == "0,0")
   }
 
   val number1: Int = 2
   val number2: Int = 0
-  val number3: Int = 1
+  val number3: Int = -1
   val exp1: Int = 2
   val exp2: Int = 0
   val exp3: Int = 1
@@ -106,7 +106,7 @@ class DivideAndConquerTest extends munit.FunSuite {
   test("Suc:"){
     assert(DivideAndConquer.suc(number1) == 3)
     assert(DivideAndConquer.suc(number2) == 1)
-    assert(DivideAndConquer.suc(number3) == 2)
+    assert(DivideAndConquer.suc(number3) == 0)
   }
 
   val number4: Int = -4
@@ -119,14 +119,14 @@ class DivideAndConquerTest extends munit.FunSuite {
 
   test("Sum:"){
     assert(DivideAndConquer.sum(number1, number2) == 2)
-    assert(DivideAndConquer.sum(number2, number3) == 1)
-    assert(DivideAndConquer.sum(number3, number4) == -3)
+    assert(DivideAndConquer.sum(number2, number3) == -1)
+    assert(DivideAndConquer.sum(number1, number3) == 1)
   }
 
   test("Difference:"){
     assert(DivideAndConquer.difference(number1, number2) == 2)
     assert(DivideAndConquer.difference(number1, number3) == 1)
-    assert(DivideAndConquer.difference(number3, number2) == 1)
+    assert(DivideAndConquer.difference(number3, number2) == -1)
   }
 
   test("Pow:") {
