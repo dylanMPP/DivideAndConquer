@@ -13,6 +13,16 @@ object DivideAndConquer extends App with IDivideAndConquer {
   // CLOSEST POINTS -> Returns the closest points of a list of points (the points are pair of int numbers)
   def closestPoints(list: List[List[Int]]): Double = ???
 
+  // MERGE SORT
+  def mergeSort(list: List[Int]): List[Int] = ???
+
+  def merge(l1: List[Int], l2: List[Int]) = ???
+
+  // QUICKSORT
+  def quickSort(list: List[Int], firstPos: Int, lastPos: Int): List[Int] = ???
+
+  def quickSortPartition(list: List[Int], firstPos: Int, lastPos: Int): Int = ???
+
   // EUCLIDEAN DISTANCE -> Returns the distance between 2 points (pairs of int numbers) using the euclidean method
   def euclideanDistance(firstPair: List[Int], secondPair: List[Int]): Double =
     if (firstPair.length != 2 || secondPair.length != 2) {
@@ -87,12 +97,4 @@ object DivideAndConquer extends App with IDivideAndConquer {
   def squareRoot(number: Double): Double = iterativeSquareRoot(number, 1)
   // END OF SQRT METHODS
 
-  // MERGE SORT
-  def mergeSort(list: List[Int]): List[Int] = ???
-
-  def merge(l1: List[Int], l2: List[Int]) = ???
-
-  def quickSort(list:List[Int], firstPos:Int, lastPos:Int): List[Int] = ???
-
-  def quickSortPartition(list: List[Int], firstPos: Int, lastPos: Int): Int = ???
 }
