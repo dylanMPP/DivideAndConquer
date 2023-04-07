@@ -5,8 +5,10 @@ import java.text.DecimalFormat
 
 class DivideAndConquerTest extends munit.FunSuite {
 
-  val shortList: List[Int] = List(10,3,2,9,8,7)
+  val shortList: List[Int] = List(3,1,2)
   val normalList: List[Int] = List(10,7,3,6,2,9)
+  //                              2,7,3,6,9,10 (5)
+  //                              2,3,6,7,9,10 (3)
   val repeatedList: List[Int] = List(10,7,3,10,6,2,9)
   val allRepeatedList: List[Int] = List(1,1,1,1,1,1)
   val sortedList: List[Int] = List(1,2,3,10,22)
@@ -14,22 +16,19 @@ class DivideAndConquerTest extends munit.FunSuite {
   val invertedSortedList: List[Int] = List(9,8,7,6,1,0)
 
   test("Number Of Inversions:") {
-    println(DivideAndConquer.numberOfInversions(shortList))
-    println(DivideAndConquer.numberOfInversions(normalList))
-    println(DivideAndConquer.numberOfInversions(invertedSortedList))
-    println(DivideAndConquer.numberOfInversions(List(3,2,1)))
-
-    //assert(DivideAndConquer.numberOfInversions(normalList)==4)
-    assert(DivideAndConquer.numberOfInversions(repeatedList)==5)
+    assert(DivideAndConquer.numberOfInversions(shortList)==2)
+    assert(DivideAndConquer.numberOfInversions(normalList)==10)
+    assert(DivideAndConquer.numberOfInversions(repeatedList)==13)
     assert(DivideAndConquer.numberOfInversions(allRepeatedList)==0)
     assert(DivideAndConquer.numberOfInversions(sortedList)==0)
     assert(DivideAndConquer.numberOfInversions(voidList)==0)
-    assert(DivideAndConquer.numberOfInversions(invertedSortedList)==3)
+    assert(DivideAndConquer.numberOfInversions(invertedSortedList)==15)
   }
 
   val number3wayRepeatedList: List[Int] = List(10, 7, 3, 10, 8, 1, 10)
 
   test("Improved QuickSort:") {
+    println("result normal "+DivideAndConquer.improvingQuickSort(normalList))
     assert(DivideAndConquer.improvingQuickSort(normalList) == List(2,3,6,7,9,10))
     assert(DivideAndConquer.improvingQuickSort(repeatedList) == List(2,3,6,7,9,10,10))
     assert(DivideAndConquer.improvingQuickSort(allRepeatedList)== List(1,1,1,1,1,1))
@@ -38,22 +37,21 @@ class DivideAndConquerTest extends munit.FunSuite {
     assert(DivideAndConquer.improvingQuickSort(voidList) == voidList)
   }
 
-  /*test("Mergesort:"){
-    assert(DivideAndConquer.mergeSort(normalList) == List(2, 3, 6, 7, 9, 10))
-    assert(DivideAndConquer.mergeSort(repeatedList) == List(2, 3, 6, 7, 9, 10, 10))
-    assert(DivideAndConquer.mergeSort(allRepeatedList) == List(1, 1, 1, 1, 1, 1))
-    assert(DivideAndConquer.mergeSort(sortedList) == sortedList)
-    assert(DivideAndConquer.mergeSort(voidList) == voidList)
-  }*/
+  test("Mergesort:"){
+    assert(DivideAndConquer.mergeSort(normalList)._1 == List(2, 3, 6, 7, 9, 10))
+    assert(DivideAndConquer.mergeSort(repeatedList)._1 == List(2, 3, 6, 7, 9, 10, 10))
+    assert(DivideAndConquer.mergeSort(allRepeatedList)._1 == List(1, 1, 1, 1, 1, 1))
+    assert(DivideAndConquer.mergeSort(sortedList)._1 == sortedList)
+    assert(DivideAndConquer.mergeSort(voidList)._1 == voidList)
+  }
 
   test("Quicksort:"){
-    println(DivideAndConquer.randomizedQuickSort(normalList, 1, normalList.length, List()))
-    assert(DivideAndConquer.randomizedQuickSort(normalList, 1, normalList.length, List()) == List(2, 3, 6, 7, 9, 10))
-    assert(DivideAndConquer.randomizedQuickSort(repeatedList, 1, repeatedList.length, List()) == List(2, 3, 6, 7, 9, 10, 10))
-    assert(DivideAndConquer.randomizedQuickSort(allRepeatedList, 1, allRepeatedList.length, List()) == List(1, 1, 1, 1, 1, 1))
-    assert(DivideAndConquer.randomizedQuickSort(number3wayRepeatedList, 1, number3wayRepeatedList.length, List()) == List(1, 3, 7, 8, 10, 10, 10))
-    assert(DivideAndConquer.randomizedQuickSort(sortedList, 1, sortedList.length, List()) == sortedList)
-    assert(DivideAndConquer.randomizedQuickSort(voidList, 1, voidList.length, List()) == voidList)
+    assert(DivideAndConquer.randomizedQuickSort(normalList/*, 1, normalList.length, List()*/) == List(2, 3, 6, 7, 9, 10))
+    assert(DivideAndConquer.randomizedQuickSort(repeatedList/*, 1, repeatedList.length, List()*/) == List(2, 3, 6, 7, 9, 10, 10))
+    assert(DivideAndConquer.randomizedQuickSort(allRepeatedList/*, 1, allRepeatedList.length, List()*/) == List(1, 1, 1, 1, 1, 1))
+    assert(DivideAndConquer.randomizedQuickSort(number3wayRepeatedList/*, 1, number3wayRepeatedList.length, List()*/) == List(1, 3, 7, 8, 10, 10, 10))
+    assert(DivideAndConquer.randomizedQuickSort(sortedList/*, 1, sortedList.length, List()*/) == sortedList)
+    assert(DivideAndConquer.randomizedQuickSort(voidList/*, 1, voidList.length, List()*/) == voidList)
   }
 
   val normalSetPoints: List[List[Int]] = List(List(0, 0), List(4, 9), List(-1, -3), List(-2, 1))

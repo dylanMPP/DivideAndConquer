@@ -2,32 +2,51 @@ package DivideAndConquerPacket
 
 import scala.annotation.tailrec
 import scala.util.Random
+
 object DivideAndConquer extends App with IDivideAndConquer {
 
   // NUMBER OF INVERSIONS -> Returns the number of inversions that are necessary to get the sorted list
   def numberOfInversions(list: List[Int]): Int =
-
-
-    if (alreadySorted(list, 0) == 0) {
-      0
-    } else {
-      if (list.length % 2 == 0) {
-        mergeSort(list, 0, 0)._2
-      } else {
-        // I subtract 1 to the result of the number of inversions given by 'modifiedMergeSort', because
-        // when the list length is odd, the center number is repeated in the two first partitions
-        val n = list.length / 2
-
-        if (list(n) > list(n + 1)) {
-          mergeSort(list, 0, 0)._2 - 1
-        } else {
-          mergeSort(list, 0, 0)._2
-        }
-      }
-    }
+    mergeSort(list)._2
 
   // IMPROVING QUICKSORT -> Returns the sorted list using quicksort, using a 3-way partition instead of a 2-way
-  def improvingQuickSort(list: List[Int]): List[Int] = ???
+  def improvingQuickSort(list: List[Int]): List[Int] =
+    list match
+      case Nil => list
+      case head :: Nil => list
+      case head :: tail =>
+        val pivotPos = random(1, list.length - 1)
+        var anotherPivotPos = -1
+
+        anotherPivotPos = random(pivotPos + 1, list.length)
+
+        val pivot = list(pivotPos - 1)
+        val anotherPivot = list(anotherPivotPos - 1)
+
+        val valueHead = list.head
+        val valueHead2 = list.tail.head
+        val exchangedList = list.updated(0, pivot).updated(pivotPos - 1, valueHead).updated(1, anotherPivot).updated(anotherPivotPos - 1, valueHead2)
+        println(pivotPos)
+        println(anotherPivotPos)
+        println(exchangedList)
+
+        val (left, center, right): (List[Int], List[Int], List[Int]) = randomized3WayPartition(exchangedList.tail.tail, pivot, anotherPivot, List(), List(), List())
+        improvingQuickSort(left) ::: (pivot :: improvingQuickSort(center) ::: (anotherPivot :: improvingQuickSort(right)))
+
+  @tailrec
+  def randomized3WayPartition(list: List[Int], pivot: Int, pivot2: Int, left: List[Int], center: List[Int], right: List[Int]): (List[Int], List[Int], List[Int]) =
+    list match
+      case Nil => (left, center, right)
+      case head :: tail =>
+        if (head < pivot) {
+          println("entro a pivot1")
+          randomized3WayPartition(tail, pivot, pivot2, head :: left, center, right)
+        } else if (head < pivot2 && head > pivot) {
+          println("entro a pivto2")
+          randomized3WayPartition(tail, pivot, pivot2, left, head :: center, right)
+        } else {
+          randomized3WayPartition(tail, pivot, pivot2, left, center, head :: right)
+        }
 
   // CLOSEST POINTS -> Returns the closest points of a list of points (the points are pair of int numbers)
   def closestPoints(list: List[List[Int]]): Double = ???
@@ -49,76 +68,36 @@ object DivideAndConquer extends App with IDivideAndConquer {
       }
 
   // MODIFIED MERGE SORT
-  def mergeSort(list: List[Int], inversions: Int, totalInv: Int): (List[Int], Int) =
-    // List(10,7,3,6,2,9)
-    val n = list.length / 2
-    // n = 3
-    // n = 1.5
-    // n = 0
-
-    // n = 1
-    // n = 0
-    // n = 0
-    if (n == 0) (list, inversions)
-    // 10, 0
-    // 7, 0
-    // 3, 0
+  def mergeSort(list: List[Int]): (List[Int], Int) = {
+    if (list.length <= 1) (list, 0)
     else {
-      //l1: (10,7,3)
-      //l2: (6,2,9)
-
-      //l1: 10
-      //l2: (7,3)
-
-      //l1: 7
-      //l2: 3
-      val (l1, l2) = list splitAt n
-
-      // (3,7,10),
-      // (3,7), 1
-
-      /*totalInv = totalInv + tailMerge(mergeSort(l1, inversions, totalInv)._2 /* 7, 0*/,
-        mergeSort(l2, inversions, totalInv)._1 /* 3,0*/, inversions, List())._2*/
-
-      tailMerge(mergeSort(l1, inversions, totalInv)._1 /* 7, 0*/ ,
-        mergeSort(l2, inversions, totalInv)._1 /* 3,0*/ , inversions, List())
-      //                  (10,7,3), 0             |           (6,2,9), 0
-      //                  10, 0                   |           (7,3), 0
-      //                  7,0                     |           3,0
-
+      val (left, right) = list.splitAt(list.length / 2)
+      val (leftSorted, leftInversions) = mergeSort(left)
+      val (rightSorted, rightInversions) = mergeSort(right)
+      val (merged, mergeInversions) = merge(leftSorted, rightSorted, 0)
+      (merged, leftInversions + rightInversions + mergeInversions)
+    }
+  }
+  
+  def merge(list_left: List[Int], list_right: List[Int], countInv: Int): (List[Int], Int) =
+    (list_left, list_right) match {
+      case (Nil, _) => (list_right, countInv)
+      case (_, Nil) => (list_left, countInv)
+      case (head1 :: tail1, head2 :: tail2) =>
+        if (head1 <= head2) {
+          val (merged, inversions) = merge(tail1, list_right, countInv)
+          (head1 :: merged, inversions)
+        } else {
+          val (merged, inversions) = merge(list_left, tail2, countInv + list_left.length)
+          (head2 :: merged, inversions)
+        }
     }
 
   @tailrec
-  def tailMerge(l1: List[Int], l2: List[Int], inversions: Int, resultList: List[Int]): (List[Int], Int) =
-  // 7, 3
-
-  // 10, (3,7)
-  // 10, 7
-  // 10, Nil
-    (l1, l2) match {
-      case (Nil, _) => (resultList.reverse ++ l2, inversions)
-      //3::7::10::Nil
-      case (_, Nil) => (resultList.reverse ++ l1, inversions)
-      case (head1 :: tail1, head2 :: tail2) =>
-        if (head1 <= head2)
-          tailMerge(tail1, l2, inversions, head1 :: resultList)
-        else // (head1 > head2)
-        //        7, Nil, 1, 3::Nil
-
-        //      10, 7, 1, 3::Nil
-        //      10, Nil, 2, 7::3::Nil
-          tailMerge(l1, tail2, inversions + 1, head2 :: resultList)
-    }
-
-  /*def merge(l1: List[Int], l2: List[Int], inversions: Int): (List[Int], Int) =
-      l1 match
-        case Nil => (l2, inversions)
-        case head::tail => l2 match {
-          case Nil => (l1, inversions)
-          case head2::tail2 =>
-            if (head<head2) (head::merge(tail, l2, inversions)._1, merge(tail, l2, inversions)._2+1)
-            else (head2::merge(l1, tail2, inversions)._1, merge(l1, tail2, inversions)._2+1)
-        }*/
+  def verifyElements(list: List[Int], value: Int, amount: Int): Int =
+    list match
+      case Nil => amount
+      case head :: tail => if (head > value) verifyElements(tail, value, amount + 1) else verifyElements(tail, value, amount)
 
   // QUICKSORT
   def random(start: Int, end: Int): Int = {
@@ -126,52 +105,27 @@ object DivideAndConquer extends App with IDivideAndConquer {
     random.nextInt(end - start + 1) + start
   }
 
-  def randomizedQuickSort(list: List[Int], firstPos: Int, lastPos: Int, resultList: List[Int]): List[Int] =
-    if(firstPos < lastPos) {
-      val q = randomizedPartition(list, firstPos, lastPos)._2
+  def randomizedQuickSort(list: List[Int]): List[Int] =
+    list match
+      case Nil => list
+      case head :: Nil => list
+      case head :: tail =>
+        val pivotPos = random(1, list.length)
+        val pivot = list(pivotPos - 1)
 
-      randomizedQuickSort(list, firstPos, q - 1, randomizedPartition(list, firstPos, lastPos)._1)
-      randomizedQuickSort(list, q + 1, lastPos, randomizedPartition(list, firstPos, lastPos)._1)
-    } else {
-      resultList
-    }
+        val valueHead = list.head
+        val exchangedList = list.updated(0, pivot).updated(pivotPos - 1, valueHead)
 
-  def randomizedPartition(list: List[Int], firstPos: Int, lastPos: Int): (List[Int],Int) =
-    val i = random(firstPos, lastPos)
+        val (left, right): (List[Int], List[Int]) = randomizedPartition(exchangedList.tail, pivot, List(), List())
+        randomizedQuickSort(left) ::: (pivot :: randomizedQuickSort(right))
 
-    val valueLastPos = list(lastPos - 1)
-    val valueI = list(i - 1)
-
-    val exchangedList = list.updated(lastPos - 1, valueI).updated(i - 1, valueLastPos)
-    partition(exchangedList, firstPos, lastPos)
-
-  // Devuelvo la lista que se va actualizando más la Q, la posición en la que se va a ir organizando
-  def partition(list: List[Int], firstPos: Int, lastPos: Int): (List[Int], Int) =
-    val x = list(lastPos - 1)
-    var i = firstPos - 1
-
-    @tailrec
-    def partitionFor(lastPos: Int, list: List[Int],
-                     cont: Int): (List[Int], Int) =
-
-      if (cont == (lastPos - 1)) {
-        (list, i)
-      } else if (list(cont) <= x) {
-        i = i + 1
-
-        val valueCont = list(cont)
-        val valueI = list(i)
-
-        partitionFor(lastPos, list.updated(i, valueCont).updated(cont, valueI), cont + 1)
-      } else {
-        partitionFor(lastPos, list, cont + 1)
-      }
-
-    val valueLastPos = list(lastPos - 1)
-    val valueI = list(i + 1)
-
-    (list.updated(lastPos - 1, valueI).updated(i + 1, valueLastPos), i + 1)
-
+  @tailrec
+  def randomizedPartition(list: List[Int], pivot: Int, left: List[Int], right: List[Int]): (List[Int], List[Int]) =
+    list match
+      case Nil => (left, right)
+      case head :: tail =>
+        if (head < pivot) randomizedPartition(tail, pivot, head :: left, right)
+        else randomizedPartition(tail, pivot, left, head :: right)
 
 
   // EUCLIDEAN DISTANCE -> Returns the distance between 2 points (pairs of int numbers) using the euclidean method
@@ -184,15 +138,15 @@ object DivideAndConquer extends App with IDivideAndConquer {
 
       // We make verifications, for the difference when there are negative numbers or the difference result is a negative
       // number
-      if(secondPair.head < 0 && firstPair.head > 0){
+      if (secondPair.head < 0 && firstPair.head > 0) {
         firstPow = pow(sum(secondPair.head, firstPair.head), 2)
       }
 
-      if(secondPair(1) < 0 && firstPair(1) > 0){
+      if (secondPair(1) < 0 && firstPair(1) > 0) {
         secondPow = pow(sum(secondPair.head, firstPair.head), 2)
       }
 
-      if(firstPow == -1 && firstPair.head != 0 && secondPair.head < firstPair.head){
+      if (firstPow == -1 && firstPair.head != 0 && secondPair.head < firstPair.head) {
         firstPow = pow(difference(firstPair.head, secondPair.head), 2)
       }
 
@@ -200,11 +154,11 @@ object DivideAndConquer extends App with IDivideAndConquer {
         secondPow = pow(difference(firstPair(1), secondPair(1)), 2)
       }
 
-      if(firstPow == -1) {
+      if (firstPow == -1) {
         firstPow = pow(difference(secondPair.head, firstPair.head), 2)
       }
 
-      if(secondPow == -1){
+      if (secondPow == -1) {
         secondPow = pow(difference(secondPair(1), firstPair(1)), 2)
       }
 
@@ -238,14 +192,14 @@ object DivideAndConquer extends App with IDivideAndConquer {
     (aprox + number / aprox) / 2
 
   def isGoodEstimation(number: Double, aprox: Double) =
-    abs(aprox*aprox - number) < 0.001
+    abs(aprox * aprox - number) < 0.001
 
   @tailrec
-  def iterativeSquareRoot(number: Double, aprox: Double) : Double =
-    if(isGoodEstimation(number, aprox)) aprox
+  def iterativeSquareRoot(number: Double, aprox: Double): Double =
+    if (isGoodEstimation(number, aprox)) aprox
     else iterativeSquareRoot(number, upgrade(number, aprox))
 
   def squareRoot(number: Double): Double = iterativeSquareRoot(number, 1)
   // END OF SQRT METHODS
-
+   
 }
