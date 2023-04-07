@@ -7,8 +7,6 @@ class DivideAndConquerTest extends munit.FunSuite {
 
   val shortList: List[Int] = List(3,1,2)
   val normalList: List[Int] = List(10,7,3,6,2,9)
-  //                              2,7,3,6,9,10 (5)
-  //                              2,3,6,7,9,10 (3)
   val repeatedList: List[Int] = List(10,7,3,10,6,2,9)
   val allRepeatedList: List[Int] = List(1,1,1,1,1,1)
   val sortedList: List[Int] = List(1,2,3,10,22)
@@ -28,7 +26,6 @@ class DivideAndConquerTest extends munit.FunSuite {
   val number3wayRepeatedList: List[Int] = List(10, 7, 3, 10, 8, 1, 10)
 
   test("Improved QuickSort:") {
-    println("result normal "+DivideAndConquer.improvingQuickSort(normalList))
     assert(DivideAndConquer.improvingQuickSort(normalList) == List(2,3,6,7,9,10))
     assert(DivideAndConquer.improvingQuickSort(repeatedList) == List(2,3,6,7,9,10,10))
     assert(DivideAndConquer.improvingQuickSort(allRepeatedList)== List(1,1,1,1,1,1))

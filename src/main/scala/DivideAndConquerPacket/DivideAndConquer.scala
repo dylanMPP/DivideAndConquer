@@ -16,34 +16,42 @@ object DivideAndConquer extends App with IDivideAndConquer {
       case head :: Nil => list
       case head :: tail =>
         val pivotPos = random(1, list.length - 1)
-        var anotherPivotPos = -1
-
-        anotherPivotPos = random(pivotPos + 1, list.length)
+        val anotherPivotPos = random(pivotPos + 1, list.length)
 
         val pivot = list(pivotPos - 1)
         val anotherPivot = list(anotherPivotPos - 1)
 
         val valueHead = list.head
         val valueHead2 = list.tail.head
-        val exchangedList = list.updated(0, pivot).updated(pivotPos - 1, valueHead).updated(1, anotherPivot).updated(anotherPivotPos - 1, valueHead2)
-        println(pivotPos)
-        println(anotherPivotPos)
-        println(exchangedList)
+        var exchangedList:List[Int] = List()
 
-        val (left, center, right): (List[Int], List[Int], List[Int]) = randomized3WayPartition(exchangedList.tail.tail, pivot, anotherPivot, List(), List(), List())
-        improvingQuickSort(left) ::: (pivot :: improvingQuickSort(center) ::: (anotherPivot :: improvingQuickSort(right)))
+        if(pivotPos==2){
+          exchangedList = list.updated(0, pivot).updated(pivotPos - 1, valueHead).updated(1, anotherPivot).updated(anotherPivotPos - 1, valueHead)
+        } else {
+          exchangedList = list.updated(0, pivot).updated(pivotPos - 1, valueHead).updated(1, anotherPivot).updated(anotherPivotPos - 1, valueHead2)
+        }
+
+        // There are 2 pivots, then I need to compare them to know their respective order
+        if(pivot > anotherPivot){
+          val (left, center, right) = randomized3WayPartition(exchangedList.tail.tail, anotherPivot, pivot, List(), List(), List())
+          improvingQuickSort(left) ::: (anotherPivot :: improvingQuickSort(center) ::: (pivot :: improvingQuickSort(right)))
+        } else if(pivot < anotherPivot) {
+          val (left, center, right) = randomized3WayPartition(exchangedList.tail.tail, pivot, anotherPivot, List(), List(), List())
+          improvingQuickSort(left) ::: (pivot :: improvingQuickSort(center) ::: (anotherPivot :: improvingQuickSort(right)))
+        } else {
+          val (left, center, right) = randomized3WayPartition(exchangedList.tail.tail, pivot, anotherPivot, List(), List(), List())
+          improvingQuickSort(left) ::: improvingQuickSort(center) ::: (pivot :: (anotherPivot :: improvingQuickSort(right)))
+        }
 
   @tailrec
   def randomized3WayPartition(list: List[Int], pivot: Int, pivot2: Int, left: List[Int], center: List[Int], right: List[Int]): (List[Int], List[Int], List[Int]) =
     list match
       case Nil => (left, center, right)
       case head :: tail =>
-        if (head < pivot) {
-          println("entro a pivot1")
-          randomized3WayPartition(tail, pivot, pivot2, head :: left, center, right)
-        } else if (head < pivot2 && head > pivot) {
-          println("entro a pivto2")
+        if (head < pivot2 && head > pivot) {
           randomized3WayPartition(tail, pivot, pivot2, left, head :: center, right)
+        } else if (head < pivot) {
+          randomized3WayPartition(tail, pivot, pivot2, head :: left, center, right)
         } else {
           randomized3WayPartition(tail, pivot, pivot2, left, center, head :: right)
         }
