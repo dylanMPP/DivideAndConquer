@@ -57,7 +57,101 @@ object DivideAndConquer extends App with IDivideAndConquer {
         }
 
   // CLOSEST POINTS -> Returns the closest points of a list of points (the points are pair of int numbers)
-  def closestPoints(list: List[List[Int]]): Double = ???
+  def closestPoints(list: List[List[Int]]): Double =
+    val xPoints = quickSortPoints(list, 0)
+    val yPoints = quickSortPoints(list, 1)
+
+    val (xd1, xd2) = xPoints splitAt(xPoints.length/2)
+    val xd1Min = findMinDistance(xd1, Int.MaxValue)
+    val xd2Min = findMinDistance(xd2, Int.MaxValue)
+
+    var xMinDistance = -1.0
+
+    if(xd1Min < xd2Min){
+      xMinDistance = xd1Min
+    } else {
+      xMinDistance = xd2Min
+    }
+
+    1.0
+
+  // Sort the points by X or Y
+  def quickSortPoints(list: List[List[Int]], whichPoints: Int): List[List[Int]] =
+    list match
+      case Nil => list
+      case head :: Nil => list
+      case head :: tail =>
+        val pivotPos = random(1, list.length)
+        val pivot = list(pivotPos - 1)
+
+        val valueHead = list.head
+        val exchangedList = list.updated(0, pivot).updated(pivotPos - 1, valueHead)
+
+        val (left, right): (List[List[Int]], List[List[Int]]) = randomizedPartitionPoints(exchangedList.tail, pivot, List(), List(), whichPoints)
+        quickSortPoints(left, whichPoints) ::: (pivot :: quickSortPoints(right, whichPoints))
+
+  // Partition of the list of pair of points for X or Y
+  @tailrec
+  def randomizedPartitionPoints(list: List[List[Int]], pivot: List[Int], left: List[List[Int]], right: List[List[Int]], whichPoints: Int): (List[List[Int]], List[List[Int]]) =
+    list match
+      case Nil => (left, right)
+      case head :: tail =>
+        if(whichPoints == 0){
+          if (head.head < pivot.head) randomizedPartitionPoints(tail, pivot, head :: left, right, whichPoints)
+          else randomizedPartitionPoints(tail, pivot, left, head :: right, whichPoints)
+        } else {
+          if (head(1) < pivot(1)) randomizedPartitionPoints(tail, pivot, head :: left, right, whichPoints)
+          else randomizedPartitionPoints(tail, pivot, left, head :: right, whichPoints)
+        }
+
+
+  @tailrec
+  def giveMePoints(list: List[List[Int]], whichPoints: Int, result: List[Int]): List[Int] =
+    list match
+      case Nil => result
+      case head::tail =>
+        if(whichPoints==0){
+          giveMePoints(tail, whichPoints, head.head::result)
+        } else {
+          giveMePoints(tail, whichPoints, head(1)::result)
+        }
+
+  // Min distance for pairs of points
+  @tailrec
+  def findMinDistance(list: List[List[Int]], min: Double): Double =
+    list match
+      case Nil => min
+      case head :: tail =>
+        val possibleMin = parallelForsMinDistance(head, list, 0 , List())
+
+        if(possibleMin < min){
+          findMinDistance(tail, possibleMin)
+        } else {
+          findMinDistance(tail, min)
+        }
+
+  // Recursive fors to calculate each distance of a pair of points between it and the rest of pair of points, gives me
+  // a list of all the distances
+  @tailrec
+  def parallelForsMinDistance(pair: List[Int], list: List[List[Int]], count: Int, distances: List[Double]): Double =
+    if(count == list.length - 1){
+      minDistanceOfPairDistances(distances, distances.head, 0)
+    } else {
+      parallelForsMinDistance(pair, list.tail, count+1, euclideanDistance(pair, list.head)::distances)
+    }
+
+  // Calculates the minimum distance in a list of distances
+  @tailrec
+  def minDistanceOfPairDistances(distancesList: List[Double], min: Double, count: Int): Double =
+    if(count == distancesList.length-1){
+      min
+    } else {
+      if(distancesList.head < min){
+        minDistanceOfPairDistances(distancesList.tail, distancesList.head, count+1)
+      } else {
+        minDistanceOfPairDistances(distancesList.tail, min, count+1)
+      }
+    }
 
   // LIST ALREADY SORTED ?
   // It returns 0 if the list is already sorted, 1 or more if isn't sorted
