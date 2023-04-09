@@ -262,13 +262,13 @@ object DivideAndConquer extends App with IDivideAndConquer {
   // EUCLIDEAN DISTANCE -> Returns the distance between 2 points (pairs of int numbers) using the euclidean method
   def euclideanDistance(firstPair: List[Int], secondPair: List[Int]): Double =
     val distanceWithoutSqrt = euclideanDistanceRecursive(firstPair, secondPair, 0.0)
-    
+
     if(distanceWithoutSqrt == -1.0){
       distanceWithoutSqrt
     } else {
       squareRoot(distanceWithoutSqrt)
     }
-    
+
 
   @tailrec
   def euclideanDistanceRecursive(firstPair: List[Int], secondPair: List[Int], result: Double): Double =
@@ -277,69 +277,15 @@ object DivideAndConquer extends App with IDivideAndConquer {
       case (Nil, _) => -1.0
       case (_, Nil) => -1.0
       case (head :: tail, head2 :: tail2) =>
-        var first = -1
+        val difference = head2 - head
 
-        // We make verifications, for the difference when there are negative numbers or the difference result is a negative
-        // number
-
-        if (firstPair.head == 0 && secondPair.head != 0) {
-          if (secondPair.head < 0) {
-            first = secondPair.head * (-1)
-          } else {
-            first = secondPair.head
-          }
-        }
-
-        if (firstPair.head != 0 && secondPair.head == 0) {
-          if (firstPair.head < 0) {
-            first = firstPair.head * (-1)
-          } else {
-            first = firstPair.head
-          }
-        }
-
-        if (firstPair.head < 0 && secondPair.head < 0) {
-          if (firstPair.head < secondPair.head) {
-            first = difference(firstPair.head * (-1), secondPair.head * (-1))
-          } else {
-            first = difference(secondPair.head * (-1), firstPair.head * (-1))
-          }
-        }
-
-        if (secondPair.head < 0 && firstPair.head > 0) {
-          first = sum(secondPair.head * (-1), firstPair.head)
-        }
-
-        if (secondPair.head > 0 && firstPair.head < 0) {
-          first = sum(firstPair.head * (-1), secondPair.head)
-        }
-
-        if (first == -1 && firstPair.head != 0 && secondPair.head < firstPair.head) {
-          first = difference(firstPair.head, secondPair.head)
-        }
-
-        if (first == -1) {
-          first = difference(secondPair.head, firstPair.head)
-        }
-
-        euclideanDistanceRecursive(firstPair.tail, secondPair.tail, result + pow(first, 2))
+        euclideanDistanceRecursive(tail, tail2, result + pow(difference, 2))
 
   // PREDECESOR AND SUCESOR
   def pred(n: Int): Int = if (n > 0) n - 1 else 0
 
-  def suc(n: Int): Int = n + 1
-
   // ABS
   def abs(x: Double) = if (x >= 0) x else -x
-
-  // SUM
-  def sum(number: Int, number2: Int): Int =
-    if (number == 0) number2 else suc(sum(pred(number), number2))
-
-  // DIFFERENCE
-  @tailrec
-  def difference(number: Int, number2: Int): Int =
-    if (number2 == 0) number else difference(pred(number), pred(number2))
 
   // POW
   def pow(base: Int, exp: Int): Int =

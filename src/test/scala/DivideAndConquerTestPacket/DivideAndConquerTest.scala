@@ -107,30 +107,12 @@ class DivideAndConquerTest extends munit.FunSuite {
     assert(DivideAndConquer.pred(number3) == 0)
   }
 
-  test("Suc:"){
-    assert(DivideAndConquer.suc(number1) == 3)
-    assert(DivideAndConquer.suc(number2) == 1)
-    assert(DivideAndConquer.suc(number3) == 0)
-  }
-
   val number4: Int = -4
 
   test("Abs:"){
     assert(DivideAndConquer.abs(number1) == 2)
     assert(DivideAndConquer.abs(number2) == 0)
     assert(DivideAndConquer.abs(number4) == 4)
-  }
-
-  test("Sum:"){
-    assert(DivideAndConquer.sum(number1, number2) == 2)
-    assert(DivideAndConquer.sum(number2, number3) == -1)
-    assert(DivideAndConquer.sum(number1, number3) == 1)
-  }
-
-  test("Difference:"){
-    assert(DivideAndConquer.difference(number1, number2) == 2)
-    assert(DivideAndConquer.difference(number1, number3) == 1)
-    assert(DivideAndConquer.difference(number3, number2) == -1)
   }
 
   test("Pow:") {
