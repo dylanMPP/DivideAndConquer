@@ -272,100 +272,63 @@ object DivideAndConquer extends App with IDivideAndConquer {
 
   // EUCLIDEAN DISTANCE -> Returns the distance between 2 points (pairs of int numbers) using the euclidean method
   def euclideanDistance(firstPair: List[Int], secondPair: List[Int]): Double =
-
-
     if (firstPair.length != 2 || secondPair.length != 2) {
       -1.0
     } else {
-      var firstPow = -1
-      var secondPow = -1
-
-      // We make verifications, for the difference when there are negative numbers or the difference result is a negative
-      // number
-
-      if(firstPair.head == 0 && secondPair.head != 0){
-        if(secondPair.head < 0){
-          firstPow = pow(secondPair.head*(-1), 2)
-        } else {
-          firstPow = pow(secondPair.head, 2)
-        }
-      }
-
-      if (firstPair(1) == 0 && secondPair(1) != 0) {
-        if (secondPair(1) < 0) {
-          secondPow = pow(secondPair(1) * (-1), 2)
-        } else {
-          secondPow = pow(secondPair(1), 2)
-        }
-      }
-
-      if (firstPair.head != 0 && secondPair.head == 0) {
-        if (firstPair.head < 0) {
-          firstPow = pow(firstPair.head * (-1), 2)
-        } else {
-          firstPow = pow(firstPair.head, 2)
-        }
-      }
-
-      if (firstPair(1) != 0 && secondPair(1) == 0) {
-        if (firstPair(1) < 0) {
-          secondPow = pow(firstPair(1)* (-1), 2)
-        } else {
-          secondPow = pow(firstPair(1), 2)
-        }
-      }
-
-      if(firstPair.head < 0 && secondPair.head < 0){
-        if(firstPair.head < secondPair.head){
-          firstPow = pow(difference(firstPair.head*(-1), secondPair.head*(-1)),2)
-        } else {
-          firstPow = pow(difference(secondPair.head*(-1), firstPair.head*(-1)),2)
-        }
-      }
-
-      if(firstPair(1) < 0 && secondPair(1) < 0){
-        if (firstPair(1) < secondPair(1)) {
-          secondPow = pow(difference(firstPair(1) * (-1), secondPair(1) * (-1)),2)
-        } else {
-          secondPow = pow(difference(secondPair(1) * (-1), firstPair(1) * (-1)),2)
-        }
-      }
-
-      if (secondPair.head < 0 && firstPair.head > 0) {
-        firstPow = pow(sum(secondPair.head*(-1), firstPair.head), 2)
-      }
-
-      if (secondPair(1) < 0 && firstPair(1) > 0) {
-        secondPow = pow(sum(secondPair(1)*(-1), firstPair(1)), 2)
-      }
-
-      if (secondPair.head > 0 && firstPair.head < 0) {
-        firstPow = pow(sum(firstPair.head * (-1), secondPair.head), 2)
-      }
-
-      if (secondPair(1) > 0 && firstPair(1) < 0) {
-        secondPow = pow(sum(firstPair(1) * (-1), secondPair(1)), 2)
-      }
-
-      if (firstPow == -1 && firstPair.head != 0 && secondPair.head < firstPair.head) {
-        firstPow = pow(difference(firstPair.head, secondPair.head), 2)
-      }
-
-      if (secondPow == -1 && firstPair(1) != 0 && secondPair(1) < firstPair(1)) {
-        secondPow = pow(difference(firstPair(1), secondPair(1)), 2)
-      }
-
-      if (firstPow == -1) {
-        firstPow = pow(difference(secondPair.head, firstPair.head), 2)
-      }
-
-      if (secondPow == -1) {
-        secondPow = pow(difference(secondPair(1), firstPair(1)), 2)
-      }
-
-      val result = sum(firstPow, secondPow)
-      squareRoot(result)
+      squareRoot(euclideanDistanceRecursive(firstPair, secondPair, 0.0))
     }
+
+  @tailrec
+  def euclideanDistanceRecursive(firstPair: List[Int], secondPair: List[Int], result: Double): Double =
+    (firstPair, secondPair) match
+      case (Nil, Nil) => result
+      case (head :: tail, head2 :: tail2) =>
+        var first = -1
+
+        // We make verifications, for the difference when there are negative numbers or the difference result is a negative
+        // number
+
+        if (firstPair.head == 0 && secondPair.head != 0) {
+          if (secondPair.head < 0) {
+            first = secondPair.head * (-1)
+          } else {
+            first = secondPair.head
+          }
+        }
+
+        if (firstPair.head != 0 && secondPair.head == 0) {
+          if (firstPair.head < 0) {
+            first = firstPair.head * (-1)
+          } else {
+            first = firstPair.head
+          }
+        }
+
+        if (firstPair.head < 0 && secondPair.head < 0) {
+          if (firstPair.head < secondPair.head) {
+            first = difference(firstPair.head * (-1), secondPair.head * (-1))
+          } else {
+            first = difference(secondPair.head * (-1), firstPair.head * (-1))
+          }
+        }
+
+        if (secondPair.head < 0 && firstPair.head > 0) {
+          first = sum(secondPair.head * (-1), firstPair.head)
+        }
+
+        if (secondPair.head > 0 && firstPair.head < 0) {
+          first = sum(firstPair.head * (-1), secondPair.head)
+        }
+
+        if (first == -1 && firstPair.head != 0 && secondPair.head < firstPair.head) {
+          first = difference(firstPair.head, secondPair.head)
+        }
+
+        if (first == -1) {
+          first = difference(secondPair.head, firstPair.head)
+        }
+
+        euclideanDistanceRecursive(firstPair.tail, secondPair.tail, result + pow(first, 2))
 
   // PREDECESOR AND SUCESOR
   def pred(n: Int): Int = if (n > 0) n - 1 else 0
