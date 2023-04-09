@@ -157,17 +157,6 @@ object DivideAndConquer extends App with IDivideAndConquer {
         }
 
 
-  @tailrec
-  def giveMePoints(list: List[List[Int]], whichPoints: Int, result: List[Int]): List[Int] =
-    list match
-      case Nil => result
-      case head::tail =>
-        if(whichPoints==0){
-          giveMePoints(tail, whichPoints, head.head::result)
-        } else {
-          giveMePoints(tail, whichPoints, head(1)::result)
-        }
-
   // Min distance for pairs of points
   @tailrec
   def findMinDistance(list: List[List[Int]], min: Double): Double =
@@ -272,16 +261,21 @@ object DivideAndConquer extends App with IDivideAndConquer {
 
   // EUCLIDEAN DISTANCE -> Returns the distance between 2 points (pairs of int numbers) using the euclidean method
   def euclideanDistance(firstPair: List[Int], secondPair: List[Int]): Double =
-    if (firstPair.length != 2 || secondPair.length != 2) {
-      -1.0
+    val distanceWithoutSqrt = euclideanDistanceRecursive(firstPair, secondPair, 0.0)
+    
+    if(distanceWithoutSqrt == -1.0){
+      distanceWithoutSqrt
     } else {
-      squareRoot(euclideanDistanceRecursive(firstPair, secondPair, 0.0))
+      squareRoot(distanceWithoutSqrt)
     }
+    
 
   @tailrec
   def euclideanDistanceRecursive(firstPair: List[Int], secondPair: List[Int], result: Double): Double =
     (firstPair, secondPair) match
       case (Nil, Nil) => result
+      case (Nil, _) => -1.0
+      case (_, Nil) => -1.0
       case (head :: tail, head2 :: tail2) =>
         var first = -1
 
