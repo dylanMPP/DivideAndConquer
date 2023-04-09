@@ -57,19 +57,18 @@ class DivideAndConquerTest extends munit.FunSuite {
   val voidPoints: List[List[Int]] = List(List(), List(), List(), List())
   val oneVoidPoint: List[List[Int]] = List(List(), List(0,0), List(4,9), List(-1, -3))
 
-  test("Closest Points:") {
-    println(DivideAndConquer.closestPoints(normalSetPoints))
-    assert(DivideAndConquer.closestPoints(normalSetPoints) == 2.2360) // sqrt of 5
-    assert(DivideAndConquer.closestPoints(repeatedSetPoints) == -1.0 ) // error
-    assert(DivideAndConquer.closestPoints(oneRepeatedSetPoints) == 2.2360) // sqrt of 5
-    assert(DivideAndConquer.closestPoints(voidPoints) == -1.0) // error
-    assert(DivideAndConquer.closestPoints(oneVoidPoint) == 3.1622) // sqrt of 10
-  }
-
   // I cast the result of the square root to String to only take 4 decimal places,
   // because the result is too long
   val df = new DecimalFormat("#.0000")
   val df2 = new DecimalFormat("#0.0")
+
+  test("Closest Points:") {
+    assert(df.format((DivideAndConquer.closestPoints(normalSetPoints))) == "2,2361") // sqrt of 5
+    assert(DivideAndConquer.closestPoints(repeatedSetPoints) == -1.0) // error
+    assert(df.format(DivideAndConquer.closestPoints(oneRepeatedSetPoints)) == "2,2361") // sqrt of 5
+    assert(DivideAndConquer.closestPoints(voidPoints) == -1.0) // error
+    assert(df.format(DivideAndConquer.closestPoints(oneVoidPoint)) == "3,1623") // sqrt of 10
+  }
 
   val firstPair: List[Int] = List(0,0)
   val secondPair: List[Int] = List(4,9)

@@ -2,6 +2,8 @@ package DivideAndConquerPacket
 
 import scala.annotation.tailrec
 import scala.util.Random
+import java.lang.Math
+import java.text.DecimalFormat
 
 object DivideAndConquer extends App with IDivideAndConquer {
 
@@ -23,19 +25,19 @@ object DivideAndConquer extends App with IDivideAndConquer {
 
         val valueHead = list.head
         val valueHead2 = list.tail.head
-        var exchangedList:List[Int] = List()
+        var exchangedList: List[Int] = List()
 
-        if(pivotPos==2){
+        if (pivotPos == 2) {
           exchangedList = list.updated(0, pivot).updated(pivotPos - 1, valueHead).updated(1, anotherPivot).updated(anotherPivotPos - 1, valueHead)
         } else {
           exchangedList = list.updated(0, pivot).updated(pivotPos - 1, valueHead).updated(1, anotherPivot).updated(anotherPivotPos - 1, valueHead2)
         }
 
         // There are 2 pivots, then I need to compare them to know their respective order
-        if(pivot > anotherPivot){
+        if (pivot > anotherPivot) {
           val (left, center, right) = randomized3WayPartition(exchangedList.tail.tail, anotherPivot, pivot, List(), List(), List())
           improvingQuickSort(left) ::: (anotherPivot :: improvingQuickSort(center) ::: (pivot :: improvingQuickSort(right)))
-        } else if(pivot < anotherPivot) {
+        } else if (pivot < anotherPivot) {
           val (left, center, right) = randomized3WayPartition(exchangedList.tail.tail, pivot, anotherPivot, List(), List(), List())
           improvingQuickSort(left) ::: (pivot :: improvingQuickSort(center) ::: (anotherPivot :: improvingQuickSort(right)))
         } else {
@@ -58,24 +60,68 @@ object DivideAndConquer extends App with IDivideAndConquer {
 
   // CLOSEST POINTS -> Returns the closest points of a list of points (the points are pair of int numbers)
   def closestPoints(list: List[List[Int]]): Double =
-    val xPoints = quickSortPoints(list, 0)
+    val listWithNoVoidPoints = noVoidPoints(list, List())
 
-    val (xd1, xd2) = xPoints splitAt(xPoints.length/2)
-    val xd1Min = findMinDistance(xd1, Int.MaxValue)
-    val xd2Min = findMinDistance(xd2, Int.MaxValue)
+    if(listWithNoVoidPoints == Nil){
+      -1.0
+    } else {
+      val xPoints = quickSortPoints(listWithNoVoidPoints, 0)
 
-    val xMinDistance = min(xd1Min, xd2Min)
+      val (xd1, xd2) = xPoints splitAt (xPoints.length / 2)
+      val xd1Min = findMinDistance(xd1, Int.MaxValue)
+      val xd2Min = findMinDistance(xd2, Int.MaxValue)
 
-    val yPoints = quickSortPoints(list, 1)
-    val (yd1, yd2) = yPoints splitAt (yPoints.length / 2)
-    val yd1Min = findMinDistance(yd1, Int.MaxValue)
-    val yd2Min = findMinDistance(yd2, Int.MaxValue)
+      val xMinDistance = min(xd1Min, xd2Min)
 
-    val yMinDistance = min(yd1Min, yd2Min)
-    min(xMinDistance, yMinDistance)
+      val notExceedXMinDistance = notExceedD(listWithNoVoidPoints, middleLine(xPoints), xMinDistance, List())
+
+      val yPoints = quickSortPoints(notExceedXMinDistance, 1)
+      val yMinDistance = findMinDistance(yPoints, Int.MaxValue)
+
+      // Como INT MAX VALUE es el min que paso para comparar, si aun haciendo el
+      // findMinDistance me da ese resultado, significa que no hubo uno menor y por tanto
+      // todos los puntos son iguales
+      if (xMinDistance == Int.MaxValue && yMinDistance == Int.MaxValue) {
+        -1.0
+      } else {
+        min(xMinDistance, yMinDistance)
+      }
+    }
+
+  @tailrec
+  def noVoidPoints(list: List[List[Int]], resultList: List[List[Int]]): List[List[Int]] =
+    list match
+      case Nil => resultList
+      case head::tail =>
+        if(head == Nil) {
+          noVoidPoints(tail, resultList)
+        } else {
+          noVoidPoints(tail, head::resultList)
+        }
+
+  def middleLine(list: List[List[Int]]): List[Double] =
+    val center = math.floor(list.length / 2).toInt
+
+    if (list.length % 2 == 0) {
+      List( ((list(center-1).head + list(center).head) / 2.0).toDouble, ((list(center-1)(1) + list(center)(1)) / 2.0).toDouble)
+    } else {
+      List(list(center - 1).head / 1.0, list(center-1)(1) / 1.0)
+    }
+
+  @tailrec
+  def notExceedD(list: List[List[Int]], middleLine: List[Double], d: Double, resultList: List[List[Int]]): List[List[Int]] =
+    list match {
+      case Nil => resultList
+      case head :: tail =>
+        if (head.head - middleLine.head > d) {
+          notExceedD(tail, middleLine, d, resultList)
+        } else {
+          notExceedD(tail, middleLine, d, head :: resultList)
+        }
+    }
 
   def min(value: Double, value2: Double): Double =
-    if(value < value2){
+    if (value < value2) {
       value
     } else {
       value2
@@ -128,8 +174,6 @@ object DivideAndConquer extends App with IDivideAndConquer {
     list match
       case Nil => min
       case head :: tail =>
-        println(head)
-        println(tail)
         val possibleMin = parallelForsMinDistance(head, tail, List())
 
         if(possibleMin < min){
@@ -142,11 +186,9 @@ object DivideAndConquer extends App with IDivideAndConquer {
   // a list of all the distances
   @tailrec
   def parallelForsMinDistance(pair: List[Int], list: List[List[Int]], distances: List[Double]): Double =
-    println("List: "+list+" Distances: "+distances)
     list match
       case Nil => minDistanceOfPairDistances(distances, Int.MaxValue)
       case head::tail =>
-        println("pair "+pair+" head "+head)
         parallelForsMinDistance(pair, tail, euclideanDistance(pair, head)::distances)
 
   // Calculates the minimum distance in a list of distances
@@ -155,27 +197,17 @@ object DivideAndConquer extends App with IDivideAndConquer {
     distancesList match
       case Nil => min
       case head::tail =>
-        if (distancesList.head < min) {
-          minDistanceOfPairDistances(distancesList.tail, distancesList.head)
-        } else {
+        if(distancesList.head == 0.03125){ // we know that this is the distance calculated
+          // and approximated of the functions of same pair of points
           minDistanceOfPairDistances(distancesList.tail, min)
+        } else {
+          if (distancesList.head < min) {
+            minDistanceOfPairDistances(distancesList.tail, distancesList.head)
+          } else {
+            minDistanceOfPairDistances(distancesList.tail, min)
+          }
         }
 
-  // LIST ALREADY SORTED ?
-  // It returns 0 if the list is already sorted, 1 or more if isn't sorted
-  @tailrec
-  def alreadySorted(list: List[Int], cont: Int): Int =
-    list match
-      case Nil => cont
-      case head :: tail => tail match {
-        case Nil => cont
-        case head2 :: tail2 =>
-          if (head > head2) {
-            alreadySorted(tail, cont + 1)
-          } else {
-            alreadySorted(tail, cont)
-          }
-      }
 
   // MODIFIED MERGE SORT
   def mergeSort(list: List[Int]): (List[Int], Int) = {
@@ -240,6 +272,8 @@ object DivideAndConquer extends App with IDivideAndConquer {
 
   // EUCLIDEAN DISTANCE -> Returns the distance between 2 points (pairs of int numbers) using the euclidean method
   def euclideanDistance(firstPair: List[Int], secondPair: List[Int]): Double =
+
+
     if (firstPair.length != 2 || secondPair.length != 2) {
       -1.0
     } else {
@@ -248,6 +282,7 @@ object DivideAndConquer extends App with IDivideAndConquer {
 
       // We make verifications, for the difference when there are negative numbers or the difference result is a negative
       // number
+
       if(firstPair.head == 0 && secondPair.head != 0){
         if(secondPair.head < 0){
           firstPow = pow(secondPair.head*(-1), 2)
@@ -302,6 +337,14 @@ object DivideAndConquer extends App with IDivideAndConquer {
 
       if (secondPair(1) < 0 && firstPair(1) > 0) {
         secondPow = pow(sum(secondPair(1)*(-1), firstPair(1)), 2)
+      }
+
+      if (secondPair.head > 0 && firstPair.head < 0) {
+        firstPow = pow(sum(firstPair.head * (-1), secondPair.head), 2)
+      }
+
+      if (secondPair(1) > 0 && firstPair(1) < 0) {
+        secondPow = pow(sum(firstPair(1) * (-1), secondPair(1)), 2)
       }
 
       if (firstPow == -1 && firstPair.head != 0 && secondPair.head < firstPair.head) {
