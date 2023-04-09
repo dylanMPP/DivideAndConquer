@@ -59,21 +59,27 @@ object DivideAndConquer extends App with IDivideAndConquer {
   // CLOSEST POINTS -> Returns the closest points of a list of points (the points are pair of int numbers)
   def closestPoints(list: List[List[Int]]): Double =
     val xPoints = quickSortPoints(list, 0)
-    val yPoints = quickSortPoints(list, 1)
 
     val (xd1, xd2) = xPoints splitAt(xPoints.length/2)
     val xd1Min = findMinDistance(xd1, Int.MaxValue)
     val xd2Min = findMinDistance(xd2, Int.MaxValue)
 
-    var xMinDistance = -1.0
+    val xMinDistance = min(xd1Min, xd2Min)
 
-    if(xd1Min < xd2Min){
-      xMinDistance = xd1Min
+    val yPoints = quickSortPoints(list, 1)
+    val (yd1, yd2) = yPoints splitAt (yPoints.length / 2)
+    val yd1Min = findMinDistance(yd1, Int.MaxValue)
+    val yd2Min = findMinDistance(yd2, Int.MaxValue)
+
+    val yMinDistance = min(yd1Min, yd2Min)
+    min(xMinDistance, yMinDistance)
+
+  def min(value: Double, value2: Double): Double =
+    if(value < value2){
+      value
     } else {
-      xMinDistance = xd2Min
+      value2
     }
-
-    1.0
 
   // Sort the points by X or Y
   def quickSortPoints(list: List[List[Int]], whichPoints: Int): List[List[Int]] =
@@ -122,7 +128,9 @@ object DivideAndConquer extends App with IDivideAndConquer {
     list match
       case Nil => min
       case head :: tail =>
-        val possibleMin = parallelForsMinDistance(head, list, 0 , List())
+        println(head)
+        println(tail)
+        val possibleMin = parallelForsMinDistance(head, tail, List())
 
         if(possibleMin < min){
           findMinDistance(tail, possibleMin)
@@ -133,25 +141,25 @@ object DivideAndConquer extends App with IDivideAndConquer {
   // Recursive fors to calculate each distance of a pair of points between it and the rest of pair of points, gives me
   // a list of all the distances
   @tailrec
-  def parallelForsMinDistance(pair: List[Int], list: List[List[Int]], count: Int, distances: List[Double]): Double =
-    if(count == list.length - 1){
-      minDistanceOfPairDistances(distances, distances.head, 0)
-    } else {
-      parallelForsMinDistance(pair, list.tail, count+1, euclideanDistance(pair, list.head)::distances)
-    }
+  def parallelForsMinDistance(pair: List[Int], list: List[List[Int]], distances: List[Double]): Double =
+    println("List: "+list+" Distances: "+distances)
+    list match
+      case Nil => minDistanceOfPairDistances(distances, Int.MaxValue)
+      case head::tail =>
+        println("pair "+pair+" head "+head)
+        parallelForsMinDistance(pair, tail, euclideanDistance(pair, head)::distances)
 
   // Calculates the minimum distance in a list of distances
   @tailrec
-  def minDistanceOfPairDistances(distancesList: List[Double], min: Double, count: Int): Double =
-    if(count == distancesList.length-1){
-      min
-    } else {
-      if(distancesList.head < min){
-        minDistanceOfPairDistances(distancesList.tail, distancesList.head, count+1)
-      } else {
-        minDistanceOfPairDistances(distancesList.tail, min, count+1)
-      }
-    }
+  def minDistanceOfPairDistances(distancesList: List[Double], min: Double): Double =
+    distancesList match
+      case Nil => min
+      case head::tail =>
+        if (distancesList.head < min) {
+          minDistanceOfPairDistances(distancesList.tail, distancesList.head)
+        } else {
+          minDistanceOfPairDistances(distancesList.tail, min)
+        }
 
   // LIST ALREADY SORTED ?
   // It returns 0 if the list is already sorted, 1 or more if isn't sorted
@@ -180,7 +188,7 @@ object DivideAndConquer extends App with IDivideAndConquer {
       (merged, leftInversions + rightInversions + mergeInversions)
     }
   }
-  
+
   def merge(list_left: List[Int], list_right: List[Int], countInv: Int): (List[Int], Int) =
     (list_left, list_right) match {
       case (Nil, _) => (list_right, countInv)
@@ -240,12 +248,60 @@ object DivideAndConquer extends App with IDivideAndConquer {
 
       // We make verifications, for the difference when there are negative numbers or the difference result is a negative
       // number
+      if(firstPair.head == 0 && secondPair.head != 0){
+        if(secondPair.head < 0){
+          firstPow = pow(secondPair.head*(-1), 2)
+        } else {
+          firstPow = pow(secondPair.head, 2)
+        }
+      }
+
+      if (firstPair(1) == 0 && secondPair(1) != 0) {
+        if (secondPair(1) < 0) {
+          secondPow = pow(secondPair(1) * (-1), 2)
+        } else {
+          secondPow = pow(secondPair(1), 2)
+        }
+      }
+
+      if (firstPair.head != 0 && secondPair.head == 0) {
+        if (firstPair.head < 0) {
+          firstPow = pow(firstPair.head * (-1), 2)
+        } else {
+          firstPow = pow(firstPair.head, 2)
+        }
+      }
+
+      if (firstPair(1) != 0 && secondPair(1) == 0) {
+        if (firstPair(1) < 0) {
+          secondPow = pow(firstPair(1)* (-1), 2)
+        } else {
+          secondPow = pow(firstPair(1), 2)
+        }
+      }
+
+      if(firstPair.head < 0 && secondPair.head < 0){
+        if(firstPair.head < secondPair.head){
+          firstPow = pow(difference(firstPair.head*(-1), secondPair.head*(-1)),2)
+        } else {
+          firstPow = pow(difference(secondPair.head*(-1), firstPair.head*(-1)),2)
+        }
+      }
+
+      if(firstPair(1) < 0 && secondPair(1) < 0){
+        if (firstPair(1) < secondPair(1)) {
+          secondPow = pow(difference(firstPair(1) * (-1), secondPair(1) * (-1)),2)
+        } else {
+          secondPow = pow(difference(secondPair(1) * (-1), firstPair(1) * (-1)),2)
+        }
+      }
+
       if (secondPair.head < 0 && firstPair.head > 0) {
-        firstPow = pow(sum(secondPair.head, firstPair.head), 2)
+        firstPow = pow(sum(secondPair.head*(-1), firstPair.head), 2)
       }
 
       if (secondPair(1) < 0 && firstPair(1) > 0) {
-        secondPow = pow(sum(secondPair.head, firstPair.head), 2)
+        secondPow = pow(sum(secondPair(1)*(-1), firstPair(1)), 2)
       }
 
       if (firstPow == -1 && firstPair.head != 0 && secondPair.head < firstPair.head) {
