@@ -60,20 +60,20 @@ object DivideAndConquer extends App with IDivideAndConquer {
 
   // CLOSEST POINTS -> Returns the closest points of a list of points (the points are pair of int numbers)
   def closestPoints(list: List[List[Int]]): Double =
-    val listWithNoVoidPoints = noVoidPoints(list, List())
+    val listWithNoVoidPoints = noVoidPoints(list, List()) // O(n)
 
     if(listWithNoVoidPoints == Nil){
       -1.0
     } else {
-      val xPoints = quickSortPoints(listWithNoVoidPoints, 0)
+      val xPoints = quickSortPoints(listWithNoVoidPoints, 0) // O(n lg n)
 
       val (xd1, xd2) = xPoints splitAt (xPoints.length / 2)
-      val xd1Min = findMinDistance(xd1, Int.MaxValue)
+      val xd1Min = findMinDistance(xd1, Int.MaxValue) // O(n)
       val xd2Min = findMinDistance(xd2, Int.MaxValue)
 
       val xMinDistance = min(xd1Min, xd2Min)
 
-      val notExceedXMinDistance = notExceedD(listWithNoVoidPoints, middleLine(xPoints), xMinDistance, List())
+      val notExceedXMinDistance = notExceedD(listWithNoVoidPoints, middleLine(xPoints), xMinDistance, List()) // O(n)
 
       val yPoints = quickSortPoints(notExceedXMinDistance, 1)
       val yMinDistance = findMinDistance(yPoints, Int.MaxValue)
@@ -113,7 +113,13 @@ object DivideAndConquer extends App with IDivideAndConquer {
     list match {
       case Nil => resultList
       case head :: tail =>
-        if (head.head - middleLine.head > d) {
+        var xDistance = head.head - middleLine.head
+
+        if(xDistance < 0){
+          xDistance = xDistance*(-1)
+        }
+
+        if (xDistance >= d) {
           notExceedD(tail, middleLine, d, resultList)
         } else {
           notExceedD(tail, middleLine, d, head :: resultList)
@@ -158,12 +164,12 @@ object DivideAndConquer extends App with IDivideAndConquer {
 
 
   // Min distance for pairs of points
-  @tailrec
+  @tailrec // 3 O(n) + O(n log n)
   def findMinDistance(list: List[List[Int]], min: Double): Double =
     list match
       case Nil => min
       case head :: tail =>
-        val possibleMin = parallelForsMinDistance(head, tail, List())
+        val possibleMin = parallelForsMinDistance(head, tail, List()) // 2 O(n) + O(n log n)
 
         if(possibleMin < min){
           findMinDistance(tail, possibleMin)
@@ -173,11 +179,11 @@ object DivideAndConquer extends App with IDivideAndConquer {
 
   // Recursive fors to calculate each distance of a pair of points between it and the rest of pair of points, gives me
   // a list of all the distances
-  @tailrec
+  @tailrec // 2 O(n) + O(n log n)
   def parallelForsMinDistance(pair: List[Int], list: List[List[Int]], distances: List[Double]): Double =
     list match
-      case Nil => minDistanceOfPairDistances(distances, Int.MaxValue)
-      case head::tail =>
+      case Nil => minDistanceOfPairDistances(distances, Int.MaxValue) // O(n)
+      case head::tail =>                  // T(n) = T(n-1) + O(1) -> O(n lg n) +
         parallelForsMinDistance(pair, tail, euclideanDistance(pair, head)::distances)
 
   // Calculates the minimum distance in a list of distances
@@ -262,11 +268,12 @@ object DivideAndConquer extends App with IDivideAndConquer {
   // EUCLIDEAN DISTANCE -> Returns the distance between 2 points (pairs of int numbers) using the euclidean method
   def euclideanDistance(firstPair: List[Int], secondPair: List[Int]): Double =
     val distanceWithoutSqrt = euclideanDistanceRecursive(firstPair, secondPair, 0.0)
+                            // T(n-1) + O(1) = Theta(n lg n)
 
     if(distanceWithoutSqrt == -1.0){
       distanceWithoutSqrt
     } else {
-      squareRoot(distanceWithoutSqrt)
+      squareRoot(distanceWithoutSqrt) // T(n/2) + O(1) = O(n)
     }
 
 
