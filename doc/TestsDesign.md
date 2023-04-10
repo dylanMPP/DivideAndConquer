@@ -13,23 +13,27 @@ The objective of this test design is to validate the functionality of the `numbe
 
 Five lists with different characteristics will be used to evaluate the `numberOfInversions(...)` function:
 
-1. `normalList`: List with non-repeated values and no specific order.
-2. `repeatedList`: List with repeated values and no specific order.
-3. `allRepeatedList`: List with repeated values and all equal.
-4. `sortedList`: List with values ordered in ascending order.
-5. `voidList`: Empty list.
+1. `shortList`: List with few elements and no specific order.
+2. `normalList`: List with non-repeated values and no specific order.
+3. `repeatedList`: List with repeated values and no specific order.
+4. `allRepeatedList`: List with repeated values and all equal.
+5. `sortedList`: List with values ordered in ascending order.
+6. `voidList`: Empty list.
+7. `invertedSortedList`: List with values ordered in descending order.
 
 For each list, an assertion will be made to validate that the `numberOfInversions(...)` function returns the correct number of inversions.
 
 ### Test Cases
 
-| Test Case | Input List | Expected Result |
-|---|---|---|
-| 1 | normalList | 4 |
-| 2 | repeatedList | 5 |
-| 3 | allRepeatedList | 0 |
-| 4 | sortedList | 0 |
-| 5 | voidList | 0 |
+| Test Case | Input List                 | Expected Result |
+|-----------|----------------------------|----------------|
+| 1         | shortList                  | 2              |  
+| 2         | normalList                 | 4              |
+| 3         | repeatedList               | 5              |
+| 4         | allRepeatedList            | 0              |
+| 5         | sortedList                 | 0              |
+| 6         | voidList                   | 0              |
+| 7         | invertedSortedList | 15             |
 
 ### Expected Results
 
@@ -179,6 +183,35 @@ For each set of points, an assertion will be made to validate that the `closestP
 
 ### Expected Results
 We expect all assertions to pass successfully, indicating that the `closestPoints(...)` function is returning the expected result for each set of points.
+
+----
+
+## - **Find Min Distance**
+
+### Function
+We are going to use the `findMinDistance(list: List[List[Int]], min: Double)` function in this tests.
+
+### Objective
+The objective of this test design is to validate the functionality of the `findMinDistance(...)` function using different types of sets of points.
+
+### Test Plan
+Five sets of points with different characteristics will be used to evaluate the `findMinDistance(...)` function:
+- `setPoints1:` List with n (n > 2) pair of points.
+- `setVoidPoins:` List with no elements.
+- `setPoints2:` List with only two pair of points.
+
+For each set of points, an assertion will be made to validate that the `findMinDistance(...)` function returns the correct result.
+
+### Test Cases
+| Test Case | Input Points | Expected Result |
+|-----------|------------|-----------------|
+| 1         | setPoints1 | 2.2360          |
+| 2         | setVoidPoints | Int.MaxValue    |
+| 3         | setPoints2 | 1.0000          |
+
+
+### Expected Results
+We expect all assertions to pass successfully, indicating that the `findMinDistance(...)` function is returning the expected result for each set of points.
 
 ----
 

@@ -46,9 +46,9 @@ class DivideAndConquerTest extends munit.FunSuite {
     assert(DivideAndConquer.randomizedQuickSort(normalList/*, 1, normalList.length, List()*/) == List(2, 3, 6, 7, 9, 10))
     assert(DivideAndConquer.randomizedQuickSort(repeatedList/*, 1, repeatedList.length, List()*/) == List(2, 3, 6, 7, 9, 10, 10))
     assert(DivideAndConquer.randomizedQuickSort(allRepeatedList/*, 1, allRepeatedList.length, List()*/) == List(1, 1, 1, 1, 1, 1))
-    assert(DivideAndConquer.randomizedQuickSort(number3wayRepeatedList/*, 1, number3wayRepeatedList.length, List()*/) == List(1, 3, 7, 8, 10, 10, 10))
     assert(DivideAndConquer.randomizedQuickSort(sortedList/*, 1, sortedList.length, List()*/) == sortedList)
     assert(DivideAndConquer.randomizedQuickSort(voidList/*, 1, voidList.length, List()*/) == voidList)
+    assert(DivideAndConquer.randomizedQuickSort(number3wayRepeatedList/*, 1, number3wayRepeatedList.length, List()*/) == List(1, 3, 7, 8, 10, 10, 10))
   }
 
   val normalSetPoints: List[List[Int]] = List(List(0, 0), List(4, 9), List(-1, -3), List(-2, 1))
@@ -70,12 +70,21 @@ class DivideAndConquerTest extends munit.FunSuite {
     assert(df.format(DivideAndConquer.closestPoints(oneVoidPoint)) == "3,1623") // sqrt of 10
   }
 
-  
-  
+  val setPoints1: List[List[Int]] = List(List(0, 0), List(-1, -3), List(-2, 1))
+  val setVoidPoints: List[List[Int]] = List()
+  val setPoints2: List[List[Int]] = List(List(0,0), List(0,1))
+
+  test("Find Min Distance:"){
+    assert(df.format((DivideAndConquer.findMinDistance(setPoints1, Int.MaxValue))) == "2,2361")
+    assert(DivideAndConquer.findMinDistance(setVoidPoints, Int.MaxValue) == Int.MaxValue)
+    assert(df.format((DivideAndConquer.findMinDistance(setPoints2, Int.MaxValue))) == "1,0000")
+  }
+
   val firstPair: List[Int] = List(0,0)
   val secondPair: List[Int] = List(4,9)
   val thirdPair: List[Int] = List(-1,3)
   val voidPair: List[Int] = List()
+  val samePair: List[Int] = List(9,1)
 
   test("Euclidean Distance:") {
     assert(df.format(DivideAndConquer.euclideanDistance(firstPair, secondPair)) == "9,8489")
@@ -83,7 +92,7 @@ class DivideAndConquerTest extends munit.FunSuite {
     assert(df.format(DivideAndConquer.euclideanDistance(secondPair, thirdPair)) == "7,8103")
     assert(DivideAndConquer.euclideanDistance(voidPair, secondPair) == -1.0)
     assert(DivideAndConquer.euclideanDistance(thirdPair, voidPair) == -1.0)
-    assert(df2.format(DivideAndConquer.euclideanDistance(secondPair, secondPair)) == "0,0")
+    assert(df2.format(DivideAndConquer.euclideanDistance(samePair, samePair)) == "0,0")
   }
 
   val number1ToSquareRoot: Int = 4
