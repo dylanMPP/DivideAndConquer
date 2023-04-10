@@ -113,7 +113,7 @@ We expect all assertions to pass successfully, indicating that the `mergeSort(..
 
 ----
 
-## - **Quick Sort**
+## - **Randomized Quick Sort**
 
 ### Function
 We are going to use the `quickSort(list: List[Int], firstPos: Int, lastPos: Int)` function in this tests.
@@ -243,34 +243,6 @@ We expect all assertions to pass successfully, indicating that the `pred(...)` f
 
 ----
 
-## - **Successor**:
-
-### Function
-We are going to use the `suc(n: Int)` function in this tests.
-
-### Objective
-The objective of this test design is to validate the functionality of the `suc(...)` function using different integer numbers.
-
-### Test Plan
-Three numbers will be used to evaluate `suc(...)` functions:
-- `number1:` A positive number.
-- `number2:` Zero.
-- `number3:` A negative number.
-
-Now, for each number, an assertion will be made to validate that the `suc(...)` function returns the correct result.
-
-### Test Cases
-| Test Case | Input Number | Expected Result |
-|-----------|--------------|-----------------|
-| 1         | number1 | 3 |
-| 2         | number2 | 1 |
-| 3         | number3 | 0 |
-
-### Expected Results
-We expect all assertions to pass successfully, indicating that the `suc(...)` function is returning the expected value for each number.
-
-----
-
 ## - **Square Root**:
 
 ### Function
@@ -324,62 +296,6 @@ Now, for each number, an assertion will be made to validate that the `abs(...)` 
 
 ### Expected Results
 We expect all assertions to pass successfully, indicating that the `abs(...)` function is returning the expected value for each number.
-
-----
-
-## - **Sum**:
-
-### Function
-We are going to use the `sum(number: Int, number2: Int)` function in this tests.
-
-### Objective
-The objective of this test design is to validate the functionality of the `sum(...)` function using different integer numbers.
-
-### Test Plan
-Four numbers will be used to evaluate `sum(...)` functions, using that three numbers to sum them:
-- `number1:` A positive number.
-- `number2:` Zero.
-- `number3:` A negative number.
-
-It's important to know that the `sum(...)` function uses the `predecessor(...)` function, that only works for positive integers, excluding 0, and for the other numbers (negative integers and zero) the result is 0. So, for each number, an assertion will be made to validate that the `sum(...)` function returns the correct result.
-
-### Test Cases
-| Test Case | Input Numbers | Expected Result |
-|-----------|--------------|-----------------|
-| 1         | number1,number2 | 4 |
-| 2         | number2,number3 | -1 |
-| 3         | number1,number3 | 1 |
-
-### Expected Results
-We expect all assertions to pass successfully, indicating that the `sum(...)` function is returning the expected value for each number.
-
----
-
-## - **Difference**:
-
-### Function
-We are going to use the `difference(number: Int, number2: Int)` function in this tests.
-
-### Objective
-The objective of this test design is to validate the functionality of the `difference(...)` function using different integer numbers.
-
-### Test Plan
-Three numbers will be used to evaluate `difference(...)` function, using that three numbers to dif them:
-- `number1:` A positive number.
-- `number2:` Zero.
-- `number3:` A negative number.
-
-It's important to know that the `difference(...)` function uses the `predecessor(...)` function, that only works for positive integers, excluding 0, and for the other numbers (negative integers and zero) the result is 0. So, for each number, an assertion will be made to validate that the `difference(...)` function returns the correct result.
-
-### Test Cases
-| Test Case | Input Numbers | Expected Result |
-|-----------|--------------|-----------------|
-| 1         | number1,number2 | 2 |
-| 2         | number1,number3 | 1 |
-| 3         | number3,number2 | -1 |
-
-### Expected Results
-We expect all assertions to pass successfully, indicating that the `difference(...)` function is returning the expected value for each number.
 
 ----
 

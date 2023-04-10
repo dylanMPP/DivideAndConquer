@@ -7,11 +7,23 @@ import java.text.DecimalFormat
 
 object DivideAndConquer extends App with IDivideAndConquer {
 
-  // NUMBER OF INVERSIONS -> Returns the number of inversions that are necessary to get the sorted list
+  /**
+   *
+   * Number of inversions to sort a list
+   *
+   * @param list List to be sorted
+   * @return Number of inversions to sort the list
+   */
   def numberOfInversions(list: List[Int]): Int =
     mergeSort(list)._2
 
-  // IMPROVING QUICKSORT -> Returns the sorted list using quicksort, using a 3-way partition instead of a 2-way
+  /**
+   *
+   * QuickSort improved, using a 3Way partition
+   *
+   * @param list List to be sorted
+   * @return List already sorted
+   */
   def improvingQuickSort(list: List[Int]): List[Int] =
     list match
       case Nil => list
@@ -45,6 +57,18 @@ object DivideAndConquer extends App with IDivideAndConquer {
           improvingQuickSort(left) ::: improvingQuickSort(center) ::: (pivot :: (anotherPivot :: improvingQuickSort(right)))
         }
 
+  /**
+   *
+   * Sort a list according to a pivot making a 3Way partition
+   *
+   * @param list List to be sorted
+   * @param pivot Pivot #1 to compare
+   * @param pivot2 Pivot #2 to compare
+   * @param left Left result list
+   * @param center Center result list
+   * @param right Right result list
+   * @return Number of inversions to sort the list
+   */
   @tailrec
   def randomized3WayPartition(list: List[Int], pivot: Int, pivot2: Int, left: List[Int], center: List[Int], right: List[Int]): (List[Int], List[Int], List[Int]) =
     list match
@@ -58,7 +82,13 @@ object DivideAndConquer extends App with IDivideAndConquer {
           randomized3WayPartition(tail, pivot, pivot2, left, center, head :: right)
         }
 
-  // CLOSEST POINTS -> Returns the closest points of a list of points (the points are pair of int numbers)
+  /**
+   *
+   * Finds the closest (different) points of a list
+   *
+   * @param list List of pair of points
+   * @return The distance of the closest points of a list of points (the points are pair of int numbers)
+   */
   def closestPoints(list: List[List[Int]]): Double =
     val listWithNoVoidPoints = noVoidPoints(list, List()) // O(n)
 
@@ -88,6 +118,14 @@ object DivideAndConquer extends App with IDivideAndConquer {
       }
     }
 
+  /**
+   *
+   * Filter list to no void points
+   *
+   * @param list List to be filtered
+   * @param resultList Result list to acumulate
+   * @return Points with no void elements
+   */
   @tailrec
   def noVoidPoints(list: List[List[Int]], resultList: List[List[Int]]): List[List[Int]] =
     list match
@@ -99,6 +137,13 @@ object DivideAndConquer extends App with IDivideAndConquer {
           noVoidPoints(tail, head::resultList)
         }
 
+  /**
+   *
+   * Finds the middle point of the list
+   *
+   * @param list list that will be use in order to find the middle point
+   * @return middle point of the list
+   */
   def middleLine(list: List[List[Int]]): List[Double] =
     val center = math.floor(list.length / 2).toInt
 
@@ -108,6 +153,16 @@ object DivideAndConquer extends App with IDivideAndConquer {
       List(list(center - 1).head / 1.0, list(center-1)(1) / 1.0)
     }
 
+  /**
+   *
+   * Filters the points that not exceed a distance d
+   *
+   * @param list List of pairs of points
+   * @param middleLine Pair of points that are the middle line
+   * @param d Distance that points can't exceed
+   * @param resultList Result list of filtered points
+   * @return List of pair of points that doesn't exceed d
+   */
   @tailrec
   def notExceedD(list: List[List[Int]], middleLine: List[Double], d: Double, resultList: List[List[Int]]): List[List[Int]] =
     list match {
@@ -126,6 +181,14 @@ object DivideAndConquer extends App with IDivideAndConquer {
         }
     }
 
+  /**
+   *
+   * Finds the minimum distance between two given distance
+   *
+   * @param value minimum distance between two points
+   * @param value2 minimum distance between two points
+   * @return minimum value or distance between the two values given before
+   */
   def min(value: Double, value2: Double): Double =
     if (value < value2) {
       value
@@ -133,6 +196,14 @@ object DivideAndConquer extends App with IDivideAndConquer {
       value2
     }
 
+  /**
+   *
+   * Sort a list of pair of points (according to X or Y) with QuickSort
+   *
+   * @param list List to be sorted
+   * @param whichPoints X or Y points
+   * @return Sorted list according to the specified points
+   */
   // Sort the points by X or Y
   def quickSortPoints(list: List[List[Int]], whichPoints: Int): List[List[Int]] =
     list match
@@ -148,7 +219,17 @@ object DivideAndConquer extends App with IDivideAndConquer {
         val (left, right): (List[List[Int]], List[List[Int]]) = randomizedPartitionPoints(exchangedList.tail, pivot, List(), List(), whichPoints)
         quickSortPoints(left, whichPoints) ::: (pivot :: quickSortPoints(right, whichPoints))
 
-  // Partition of the list of pair of points for X or Y
+  /**
+   *
+   * Partition of the list of pair of points for X or Y
+   *
+   * @param list List to be sort
+   * @param pivot Value to compare all the rest values
+   * @param left Left part of the given list
+   * @param right Right part of the given list
+   * @param whichPoints Is the indicator that tells the algorithm if we order the list respect to x or respect to y
+   * @return The two partitions of pair of points
+   */
   @tailrec
   def randomizedPartitionPoints(list: List[List[Int]], pivot: List[Int], left: List[List[Int]], right: List[List[Int]], whichPoints: Int): (List[List[Int]], List[List[Int]]) =
     list match
@@ -162,8 +243,14 @@ object DivideAndConquer extends App with IDivideAndConquer {
           else randomizedPartitionPoints(tail, pivot, left, head :: right, whichPoints)
         }
 
-
-  // Min distance for pairs of points
+  /**
+   *
+   * Minimum distance of a pair of points
+   *
+   * @param list List of pair of points
+   * @param min Min value to compare the values
+   * @return Minimum distance of a list of pair of points
+   */
   @tailrec // 3 O(n) + O(n log n)
   def findMinDistance(list: List[List[Int]], min: Double): Double =
     list match
@@ -177,8 +264,14 @@ object DivideAndConquer extends App with IDivideAndConquer {
           findMinDistance(tail, min)
         }
 
-  // Recursive fors to calculate each distance of a pair of points between it and the rest of pair of points, gives me
-  // a list of all the distances
+  /**
+   *
+   * Acts like two 'for', to find the distances within a pair of points and the rest of pair of points
+   * @param pair Pair of points to compare
+   * @param list List of pair of points
+   * @param distances List to acumulate the result distances
+   * @return Number of inversions to sort the list
+   */
   @tailrec // 2 O(n) + O(n log n)
   def parallelForsMinDistance(pair: List[Int], list: List[List[Int]], distances: List[Double]): Double =
     list match
@@ -186,7 +279,14 @@ object DivideAndConquer extends App with IDivideAndConquer {
       case head::tail =>                  // T(n) = T(n-1) + O(1) -> O(n lg n) +
         parallelForsMinDistance(pair, tail, euclideanDistance(pair, head)::distances)
 
-  // Calculates the minimum distance in a list of distances
+  /**
+   *
+   * Find the min distances of a list
+   *
+   * @param distancesList List of the distances
+   * @param min Value to compare the rest of values
+   * @return Minimum distance found
+   */
   @tailrec
   def minDistanceOfPairDistances(distancesList: List[Double], min: Double): Double =
     distancesList match
@@ -203,8 +303,13 @@ object DivideAndConquer extends App with IDivideAndConquer {
           }
         }
 
-
-  // MODIFIED MERGE SORT
+  /**
+   *
+   * Sort a list with Merge Sort and find necessary number of inversions to sort it
+   *
+   * @param list List to be sorted
+   * @return Sorted list, Number of inversions
+   */
   def mergeSort(list: List[Int]): (List[Int], Int) = {
     if (list.length <= 1) (list, 0)
     else {
@@ -216,6 +321,15 @@ object DivideAndConquer extends App with IDivideAndConquer {
     }
   }
 
+  /**
+   *
+   * Merge two sublists, with the intention to sort them
+   *
+   * @param list_left Left list to be sorted
+   * @param list_right Right list to be sorted
+   * @param countInv Amount of inversions (acumulated)
+   * @return Merged lists in one list, Number of inversions
+   */
   def merge(list_left: List[Int], list_right: List[Int], countInv: Int): (List[Int], Int) =
     (list_left, list_right) match {
       case (Nil, _) => (list_right, countInv)
@@ -230,18 +344,27 @@ object DivideAndConquer extends App with IDivideAndConquer {
         }
     }
 
-  @tailrec
-  def verifyElements(list: List[Int], value: Int, amount: Int): Int =
-    list match
-      case Nil => amount
-      case head :: tail => if (head > value) verifyElements(tail, value, amount + 1) else verifyElements(tail, value, amount)
-
+  /**
+   *
+   * Selects a random number in the range
+   *
+   * @param start Start of the range
+   * @param end End of the range
+   * @return Random number in the range
+   */
   // QUICKSORT
   def random(start: Int, end: Int): Int = {
     val random = new Random()
     random.nextInt(end - start + 1) + start
   }
 
+  /**
+   *
+   * Sorts a list according to the Randomized Quicksort
+   *
+   * @param list List to be sorted
+   * @return Sorted list
+   */
   def randomizedQuickSort(list: List[Int]): List[Int] =
     list match
       case Nil => list
@@ -256,6 +379,16 @@ object DivideAndConquer extends App with IDivideAndConquer {
         val (left, right): (List[Int], List[Int]) = randomizedPartition(exchangedList.tail, pivot, List(), List())
         randomizedQuickSort(left) ::: (pivot :: randomizedQuickSort(right))
 
+  /**
+   *
+   * Randomized partition of a list according to its pivot
+   *
+   * @param list List to be sorted
+   * @param pivot Value previously selected to compare all the other values
+   * @param left Left sublist (less than pivot)
+   * @param right Right sublist (more or equal than pivot)
+   * @return Left sorted list, Right sorted list
+   */
   @tailrec
   def randomizedPartition(list: List[Int], pivot: Int, left: List[Int], right: List[Int]): (List[Int], List[Int]) =
     list match
@@ -264,8 +397,14 @@ object DivideAndConquer extends App with IDivideAndConquer {
         if (head < pivot) randomizedPartition(tail, pivot, head :: left, right)
         else randomizedPartition(tail, pivot, left, head :: right)
 
-
-  // EUCLIDEAN DISTANCE -> Returns the distance between 2 points (pairs of int numbers) using the euclidean method
+  /**
+   *
+   * Euclidean distance, principal function
+   *
+   * @param firstPair First pair of points
+   * @param secondPair Second pair of points
+   * @return Euclidean distance of the pair of points
+   */
   def euclideanDistance(firstPair: List[Int], secondPair: List[Int]): Double =
     val distanceWithoutSqrt = euclideanDistanceRecursive(firstPair, secondPair, 0.0)
                             // T(n-1) + O(1) = Theta(n lg n)
@@ -276,7 +415,15 @@ object DivideAndConquer extends App with IDivideAndConquer {
       squareRoot(distanceWithoutSqrt) // T(n/2) + O(1) = O(n)
     }
 
-
+  /**
+   *
+   * Euclidean distance recursive calculated
+   *
+   * @param firstPair First pair of points
+   * @param secondPair Second pair of points
+   * @param result Result of the euclidean distance (accumulated)
+   * @return Value of the euclidean distance (without calculating the square root) of two pair of points
+   */
   @tailrec
   def euclideanDistanceRecursive(firstPair: List[Int], secondPair: List[Int], result: Double): Double =
     (firstPair, secondPair) match
@@ -288,28 +435,76 @@ object DivideAndConquer extends App with IDivideAndConquer {
 
         euclideanDistanceRecursive(tail, tail2, result + pow(difference, 2))
 
-  // PREDECESOR AND SUCESOR
+  /**
+   *
+   * Predecessor of a number
+   *
+   * @param n Number
+   * @return Predecessor of the number
+   */
   def pred(n: Int): Int = if (n > 0) n - 1 else 0
 
-  // ABS
+  /**
+   *
+   * Absolute value of a number
+   *
+   * @param x Number
+   * @return Absolute value of the number
+   */
   def abs(x: Double) = if (x >= 0) x else -x
 
-  // POW
+  /**
+   *
+   * Pow of a number
+   *
+   * @param base The base of the pow
+   * @param exp The exponent of the pow
+   * @return Result of the base multiplied pow times
+    */
   def pow(base: Int, exp: Int): Int =
     if (exp == 0) 1 else base * pow(base, pred(exp))
 
-  // SQRT METHODS
+  /**
+   *
+   * Upgrades the possible result of the square root
+   *
+   * @param number Number to find its square root
+   * @param aprox Approximated value of the square root
+   * @return An upgraded approximated value
+   */
   def upgrade(number: Double, aprox: Double) =
     (aprox + number / aprox) / 2
 
+  /**
+   *
+   * Finds if the given number is a good estimation
+   *
+   * @param number Number that will be analize in order to find if it is a good estimation or not
+   * @return A boolean value in order to know if the value is a good estimation
+   */
   def isGoodEstimation(number: Double, aprox: Double) =
     abs(aprox * aprox - number) < 0.001
 
+  /**
+   *
+   * Auxiliar algorithm that squares a number recursively
+   *
+   * @param number Number that will be squared
+   * @param aprox Aproximated value of the squared root
+   * @return The squared of the given number
+   */
   @tailrec
   def iterativeSquareRoot(number: Double, aprox: Double): Double =
     if (isGoodEstimation(number, aprox)) aprox
     else iterativeSquareRoot(number, upgrade(number, aprox))
 
+  /**
+   *
+   * Algorithm that squares a number
+   *
+   * @param number Number that will be squared
+   * @return The squared number the given number
+   */
   def squareRoot(number: Double): Double = iterativeSquareRoot(number, 1)
   // END OF SQRT METHODS
    

@@ -42,7 +42,7 @@ class DivideAndConquerTest extends munit.FunSuite {
     assert(DivideAndConquer.mergeSort(voidList)._1 == voidList)
   }
 
-  test("Quicksort:"){
+  test("Randomized Quicksort:"){
     assert(DivideAndConquer.randomizedQuickSort(normalList/*, 1, normalList.length, List()*/) == List(2, 3, 6, 7, 9, 10))
     assert(DivideAndConquer.randomizedQuickSort(repeatedList/*, 1, repeatedList.length, List()*/) == List(2, 3, 6, 7, 9, 10, 10))
     assert(DivideAndConquer.randomizedQuickSort(allRepeatedList/*, 1, allRepeatedList.length, List()*/) == List(1, 1, 1, 1, 1, 1))
@@ -70,6 +70,8 @@ class DivideAndConquerTest extends munit.FunSuite {
     assert(df.format(DivideAndConquer.closestPoints(oneVoidPoint)) == "3,1623") // sqrt of 10
   }
 
+  
+  
   val firstPair: List[Int] = List(0,0)
   val secondPair: List[Int] = List(4,9)
   val thirdPair: List[Int] = List(-1,3)
