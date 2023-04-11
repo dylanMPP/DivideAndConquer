@@ -11,7 +11,7 @@ The objective of this test design is to validate the functionality of the `numbe
 
 ### Test Plan
 
-Five lists with different characteristics will be used to evaluate the `numberOfInversions(...)` function:
+Seven lists with different characteristics will be used to evaluate the `numberOfInversions(...)` function:
 
 1. `shortList`: List with few elements and no specific order.
 2. `normalList`: List with non-repeated values and no specific order.
@@ -163,7 +163,9 @@ We are going to use the `closestPoints(list: List[List[Int]])` function in this 
 The objective of this test design is to validate the functionality of the `closestPoints(...)` function using different types of sets of points.
 
 ### Test Plan
-Five sets of points with different characteristics will be used to evaluate the `closestPoints(...)` function:
+Seven sets of points with different characteristics will be used to evaluate the `closestPoints(...)` function:
+- `oneSetPoint:` List with only one pair of points.
+- `threeSetPoints:` List with three pair of points.
 - `normalSetPoints:` List with non-repeated points and no specific order.
 - `repeatedSetPoints:` List with repeated points.
 - `oneRepeatedSetPoints:` List with only one repeated point.
@@ -174,12 +176,14 @@ For each set of points, an assertion will be made to validate that the `closestP
 
 ### Test Cases
 | Test Case | Input Points | Expected Result |
-|-----------|--------------|-----------------|
-| 1         | normalSetPoints | 2.2360 |
-| 2         | repeatedSetPoints | -1.0 |
-| 3         | oneRepeatedSetPoints | 2.2360 |
-| 4         | voidPoints | -1.0 |
-| 5         | oneVoidPoint | 3.1622 |
+|----------|--------------|-----------------|
+ | 1        | threeSetPoints | 1.0 |
+ | 2        | oneSetPoint    | -1.0|
+ | 3        | normalSetPoints | 2.2360 |
+| 4        | repeatedSetPoints | -1.0 |
+| 5        | oneRepeatedSetPoints | 2.2360 |
+| 6        | voidPoints | -1.0 |
+| 7        | oneVoidPoint | 3.1622 |
 
 ### Expected Results
 We expect all assertions to pass successfully, indicating that the `closestPoints(...)` function is returning the expected result for each set of points.

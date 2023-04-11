@@ -51,6 +51,8 @@ class DivideAndConquerTest extends munit.FunSuite {
     assert(DivideAndConquer.randomizedQuickSort(number3wayRepeatedList/*, 1, number3wayRepeatedList.length, List()*/) == List(1, 3, 7, 8, 10, 10, 10))
   }
 
+  val oneSetPoint: List[List[Int]] = List(List(0,0))
+  val threeSetPoints: List[List[Int]] = List(List(0,0), List(0,1), List(1,1))
   val normalSetPoints: List[List[Int]] = List(List(0, 0), List(4, 9), List(-1, -3), List(-2, 1))
   val repeatedSetPoints: List[List[Int]] = List(List(4, 9), List(4, 9), List(4, 9), List(4, 9), List(4, 9))
   val oneRepeatedSetPoints: List[List[Int]] = List(List(0, 0), List(4, 9), List(-1, -3), List(-2, 1), List(-2, 1))
@@ -63,6 +65,8 @@ class DivideAndConquerTest extends munit.FunSuite {
   val df2 = new DecimalFormat("#0.0")
 
   test("Closest Points:") {
+    assert(DivideAndConquer.closestPoints(oneSetPoint) == -1.0)
+    assert(df.format((DivideAndConquer.closestPoints(threeSetPoints))) == "1,0000")
     assert(df.format((DivideAndConquer.closestPoints(normalSetPoints))) == "2,2361") // sqrt of 5
     assert(DivideAndConquer.closestPoints(repeatedSetPoints) == -1.0) // error
     assert(df.format(DivideAndConquer.closestPoints(oneRepeatedSetPoints)) == "2,2361") // sqrt of 5

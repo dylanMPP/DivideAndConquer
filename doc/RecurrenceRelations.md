@@ -65,7 +65,7 @@ In this problem we use different recursive functions, but itself isn’t one, so
     
   Now, let's look at the cost of partitioning the list, which takes **O(n)** in the worst case. Partitioning is the operation that divides the list into two sublists, which occurs when the list is sorted in ascending or descending order, and the chosen pivot is the minimum or maximum of the list. So, the recurrence relation is:
     
-  $$T(n) = T(q) + T(n-1) + O(n)$$
+  $$T(n) = T(q) + T(n-q) + O(n)$$
     
   Lets calculate its temporal complexity with the Master Method:
     

@@ -92,7 +92,7 @@ object DivideAndConquer extends App with IDivideAndConquer {
   def closestPoints(list: List[List[Int]]): Double =
     val listWithNoVoidPoints = noVoidPoints(list, List()) // O(n)
 
-    if(listWithNoVoidPoints == Nil){
+    if(listWithNoVoidPoints == Nil || listWithNoVoidPoints.length == 1){
       -1.0
     } else {
       val xPoints = quickSortPoints(listWithNoVoidPoints, 0) // O(n lg n)
