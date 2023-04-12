@@ -78,6 +78,22 @@ class DivideAndConquerTest extends munit.FunSuite {
   val setVoidPoints: List[List[Int]] = List()
   val setPoints2: List[List[Int]] = List(List(0,0), List(0,1))
 
+  // assert with reverse because the function adds each head to the result list. Doesn't affect the result
+  // of closest points
+  test("No Void Points:") {
+    assert(DivideAndConquer.noVoidPoints(oneSetPoint, List()) == oneSetPoint)
+    assert(DivideAndConquer.noVoidPoints(normalSetPoints, List()) == normalSetPoints.reverse)
+    assert(DivideAndConquer.noVoidPoints(repeatedSetPoints, List()) == repeatedSetPoints.reverse)
+    assert(DivideAndConquer.noVoidPoints(oneVoidPoint, List()) == List(List(-1, -3),List(4,9),List(0,0)))
+    assert(DivideAndConquer.noVoidPoints(voidPoints, List()) == List())
+  }
+
+  test("Middle line:") {
+    assert(DivideAndConquer.middleLine(repeatedSetPoints) == List(4.0,9.0))
+    assert(DivideAndConquer.middleLine(normalSetPoints) == List(1.5,3.0))
+    assert(DivideAndConquer.middleLine(oneRepeatedSetPoints) == List(-1.0,-3.0))
+  }
+
   test("Find Min Distance:"){
     assert(df.format((DivideAndConquer.findMinDistance(setPoints1, Int.MaxValue))) == "2,2361")
     assert(DivideAndConquer.findMinDistance(setVoidPoints, Int.MaxValue) == Int.MaxValue)

@@ -150,7 +150,7 @@ object DivideAndConquer extends App with IDivideAndConquer {
     if (list.length % 2 == 0) {
       List( ((list(center-1).head + list(center).head) / 2.0).toDouble, ((list(center-1)(1) + list(center)(1)) / 2.0).toDouble)
     } else {
-      List(list(center - 1).head / 1.0, list(center-1)(1) / 1.0)
+      List(list(center).head / 1.0, list(center)(1) / 1.0)
     }
 
   /**

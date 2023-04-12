@@ -3,7 +3,7 @@
 ## - **Number Of Inversions**:
 
 ### Function
-We are going to use the `numberOfInversions(list: List[Int])` function in this tests.
+We are going to use the `numberOfInversions(list: List[Int])` function in these tests.
 
 ### Objective
 
@@ -44,7 +44,7 @@ We expect all assertions to pass successfully, indicating that the `numberOfInve
 ## - **Improving Quicksort**:
 
 ### Function
-We are going to use the `improvingQuickSort(list: List[Int])` function in this tests.
+We are going to use the `improvingQuickSort(list: List[Int])` function in these tests.
 
 ### Objective
 
@@ -83,7 +83,7 @@ We expect all assertions to pass successfully, indicating that the `improvingQui
 ## - **Merge Sort:**
 
 ### Function
-We are going to use the `mergeSort(list: List[Int])` function in this tests.
+We are going to use the `mergeSort(list: List[Int])` function in these tests.
 
 ### Objective
 
@@ -120,7 +120,7 @@ We expect all assertions to pass successfully, indicating that the `mergeSort(..
 ## - **Randomized Quick Sort**
 
 ### Function
-We are going to use the `quickSort(list: List[Int], firstPos: Int, lastPos: Int)` function in this tests.
+We are going to use the `quickSort(list: List[Int], firstPos: Int, lastPos: Int)` function in these tests.
 
 ### Objective
 The objective of this test design is to validate the functionality of the `quickSort()` function on different types of lists.
@@ -157,7 +157,7 @@ We expect all assertions to pass successfully, indicating that the `quickSort()`
 ## - **Closest Points**
 
 ### Function
-We are going to use the `closestPoints(list: List[List[Int]])` function in this tests.
+We are going to use the `closestPoints(list: List[List[Int]])` function in these tests.
 
 ### Objective
 The objective of this test design is to validate the functionality of the `closestPoints(...)` function using different types of sets of points.
@@ -190,16 +190,76 @@ We expect all assertions to pass successfully, indicating that the `closestPoint
 
 ----
 
+## - **No Void Points:**
+
+### Function
+We are going to use the `noVoidPoints(list: List[List[Int]], resultList: List[List[Int]])` function in these tests.
+
+### Objective
+The objective of this test design is to validate the functionality of the `noVoidPoints(...)` function using different types of sets of points.
+
+### Test Plan
+Five sets of points with different characteristics will be used to evaluate the `noVoidPoints(...)` function:
+- `oneSetPoint:` List with only one pair of points.
+- `normalSetPoints:` List with non-repeated points and no specific order.
+- `repeatedSetPoints:` List with repeated points.
+- `oneVoidPoint:` List with only one empty point.
+- `voidPoints:` List of empty points.
+
+For each set of points, an assertion will be made to validate that the `noVoidPoints(...)` function returns the correct result.
+
+### Test Cases
+| Test Case | Input Points      | Expected Result                         |
+|-----------|-------------------|-----------------------------------------|
+| 1         | oneSetPoint       | oneSetPoint                             |
+| 2         | normalSetPoints   | normalSetPoints.reverse                 |
+| 3         | repeatedSetPoints | repeatedSetPoints.reverse               |
+| 4         | oneVoidPoint      | List(List(-1,-3), List(4,9), List(0,0)) |
+| 5         | voidPoints        | List()                                  |
+
+### Expected Results
+We expect all assertions to pass successfully, indicating that the `noVoidPoints(...)` function is returning the expected result for each set of points.
+
+----
+
+## - **Middle Line:**
+
+### Function
+We are going to use the `middleLine(list: List[List[Int]])` function in these tests.
+
+### Objective
+The objective of this test design is to validate the functionality of the `middleLine(...)` function using different types of sets of points.
+
+### Test Plan
+Three sets of points with different characteristics will be used to evaluate the `middleLine(...)` function:
+- `repeatedSetPoints:` List with repeated points.
+- `normalSetPoints:` List with non-repeated points and no specific order.
+- `oneRepeatedSetPoints:` List with only one repeated point.
+
+For each set of points, an assertion will be made to validate that the `middleLine(...)` function returns the correct result.
+
+### Test Cases
+| Test Case | Input Points      | Expected Result                         |
+|----------|-------------------|-----------------------------------------|
+| 1        | repeatedSetPoints      | List(4.0,9.0)                             |
+| 2        | normalSetPoints   | List(1.5,3.0)                 |
+| 3        | oneRepeatedSetPoints | List(-1.0,-3.0)              |
+
+### Expected Results
+We expect all assertions to pass successfully, indicating that the `middleLine(...)` function is returning the expected result for each set of points.
+
+----
+
 ## - **Find Min Distance**
 
 ### Function
-We are going to use the `findMinDistance(list: List[List[Int]], min: Double)` function in this tests.
+We are going to use the `findMinDistance(list: List[List[Int]], min: Double)` function in these tests.
 
 ### Objective
 The objective of this test design is to validate the functionality of the `findMinDistance(...)` function using different types of sets of points.
 
 ### Test Plan
-Five sets of points with different characteristics will be used to evaluate the `findMinDistance(...)` function:
+Three sets of points with different characteristics will be used to evaluate the `findMinDistance(...)` function:
 - `setPoints1:` List with n (n > 2) pair of points.
 - `setVoidPoins:` List with no elements.
 - `setPoints2:` List with only two pair of points.
@@ -222,7 +282,7 @@ We expect all assertions to pass successfully, indicating that the `findMinDista
 ## - **Euclidean Distance**
 
 ### Function
-We are going to use the `euclideanDistance(firstPair: List[Int], secondPair: List[Int])` function in this tests.
+We are going to use the `euclideanDistance(firstPair: List[Int], secondPair: List[Int])` function in these tests.
 
 ### Objective
 The objective of this test design is to validate the functionality of the `euclideanDistance(...)` function using different pairs of points.
@@ -255,7 +315,7 @@ We expect all assertions to pass successfully, indicating that the `euclideanDis
 ## - **Predecessor**
 
 ### Function
-We are going to use the `pred(n: Int)` function in this tests.
+We are going to use the `pred(n: Int)` function in these tests.
 
 ### Objective
 The objective of this test design is to validate the functionality of the `pred(...)` function using different integer numbers.
@@ -283,7 +343,7 @@ We expect all assertions to pass successfully, indicating that the `pred(...)` f
 ## - **Square Root**:
 
 ### Function
-We are going to use the `squareRoot(number: Double)` function in this tests.
+We are going to use the `squareRoot(number: Double)` function in these tests.
 
 ### Objective
 The objective of this test design is to validate the functionality of the `squareRoot(...)` function using different integer numbers.
@@ -297,9 +357,9 @@ Three numbers will be used to evaluate `squareRoot(...)` functions:
 Now, for each number, an assertion will be made to validate that the `squareRoot(...)` function returns the correct result.
 
 ### Test Cases
-| Test Case | Input Number | Expected Result |
-|-----------|--------------|-----------------|
-| 1         | numer1ToSquareRoot | 2.0000 |
+| Test Case | Input Number        | Expected Result |
+|-----------|---------------------|-----------------|
+| 1         | number1ToSquareRoot | 2.0000 |
 | 2         | number2ToSquareRoot | 1.4142 |
 | 3         | number3ToSquareRoot | 0.0 |
 
@@ -311,7 +371,7 @@ We expect all assertions to pass successfully, indicating that the `squareRoot(.
 ## - **Abs**:
 
 ### Function
-We are going to use the `abs(x: Int)` function in this tests.
+We are going to use the `abs(x: Int)` function in these tests.
 
 ### Objective
 The objective of this test design is to validate the functionality of the `abs(...)` function using different integer numbers.
@@ -339,7 +399,7 @@ We expect all assertions to pass successfully, indicating that the `abs(...)` fu
 ## - **Pow**:
 
 ### Function
-We are going to use the `pow(base: Int, exp: Int)` function in this tests.
+We are going to use the `pow(base: Int, exp: Int)` function in these tests.
 
 ### Objective
 The objective of this test design is to validate the functionality of the `pow(...)` function using different integer numbers.
