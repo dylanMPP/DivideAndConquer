@@ -51,6 +51,12 @@ class DivideAndConquerTest extends munit.FunSuite {
     assert(DivideAndConquer.randomizedQuickSort(number3wayRepeatedList/*, 1, number3wayRepeatedList.length, List()*/) == List(1, 3, 7, 8, 10, 10, 10))
   }
 
+  test("Randomized 3Way Partition:"){
+    assert(DivideAndConquer.randomized3WayPartition(List(10,3,6,9), 2, 7, List(), List(), List())._1 == List())
+    assert(DivideAndConquer.randomized3WayPartition(List(1,3,22), 2, 10, List(), List(), List())._3 == List(22))
+    assert(DivideAndConquer.randomized3WayPartition(List(9,7,6,0), 1, 8, List(), List(), List())._2 == List(6, 7))
+  }
+
   val oneSetPoint: List[List[Int]] = List(List(0,0))
   val threeSetPoints: List[List[Int]] = List(List(0,0), List(0,1), List(1,1))
   val normalSetPoints: List[List[Int]] = List(List(0, 0), List(4, 9), List(-1, -3), List(-2, 1))

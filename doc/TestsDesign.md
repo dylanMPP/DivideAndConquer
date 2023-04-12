@@ -80,6 +80,40 @@ We expect all assertions to pass successfully, indicating that the `improvingQui
 
 ----
 
+## - **Randomized 3Way Partition**:
+
+### Function
+We are going to use the `randomized3WayPartition(list: List[Int], pivot: Int, pivot2: Int, left: List[Int], center: List[Int], right: List[Int])` function in these tests.
+
+### Objective
+
+
+The objective of this test design is to validate the functionality of the `randomized3WayPartition(...)` function on different types of lists.
+
+### Test Plan
+
+Three lists with different characteristics will be used to evaluate the `randomized3WayPartition(...)` function:
+
+1. `normalList - (pivots [2,7])`: List with non-repeated values and no specific order.
+2. `sortedList - (pivots [2,10])`: List with values ordered in ascending order.
+3. `invertedSortedList - (pivots [1,8])`: List with values ordered in descending order.
+
+For each list, an assertion will be made to validate that the `randomized3WayPartition(...)` function returns the three partitions (left, center, right) of the list sorted.
+
+### Test Cases
+
+| Test Case | Input List                     | Expected Result |
+|---|--------------------------------|---|
+| 1 | normalList - (pivots [2,7])    | List() |
+| 2 | repeatedList - (pivots [2,10]) | List(22) |
+| 3 | allRepeatedList - (pivots [1,8])    | List(6, 7) |
+
+### Expected Results
+
+We expect all assertions to pass successfully, indicating that the `randomized3WayPartition(...)` function is returning the sublist (left,center,right) sorted in ascending order.
+
+----
+
 ## - **Merge Sort:**
 
 ### Function
