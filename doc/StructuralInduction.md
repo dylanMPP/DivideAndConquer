@@ -2,24 +2,11 @@
 
 ## **Number of Inversions (Problem #1) - MergeSort**
 
-### **Inductive Hypothesis:**
+### **BASE CASE:** 
+To complete this step, we need to show that $mergeSort(list)$ where $list.length = k$ and $k \leq 1$, yields the ascending sorted list $list$ and the number of inversions needed to sort it. Indeed, the algorithm gives us the expected result, since when executed, enter evaluates the first $if$ and enters there, since $k\leq1$, thus returning the same list without modifications, because it is ordered ascending and has a number of investments $=0$
 
-The 'mergeSort' algorithm works correctly for lists of length n or smaller.
-
-### **Base Case:**
-
-The algorithm works correctly for lists of $1$ element or empty lists, as it returns the list without modifying it because it is considered already sorted.
-
-### **Inductive Case:**
-
-We aim to prove that the algorithm also works correctly for lists of length $n+1$. To do this, we must consider two things. The first is that the algorithm correctly sorts the list of length $n+1$, and the second is that the algorithm correctly counts the number of inversions in the original list.
-
-To prove the first, we know that the algorithm works correctly for lists of length $n$ according to the inductive hypothesis. Therefore, the two halves of length $n/2$ and $(n+1)/2$ are sorted, and concatenating these two halves guarantees that the merged list will be sorted.
-
-To prove the second, every time we concatenate two sorted halves, the algorithm counts the number of inversions in the original list. We must ensure that no inversion is counted more than once, meaning that each pair of out-of-order elements in the original list should be compared exactly once. This is ensured because when the two halves are concatenated, the algorithm maintains two indices, one for each half, and compares the first element of each half. If the element in the second half is smaller than that in the first half, then there is an inversion, since the element in the second half appears before the element in the first half in the original list. In this case, the element in the second half is added to the concatenated list, and the inversion counter is incremented. If the element in the first half is smaller than or equal to that in the second half, then there is no inversion, and the element in the first half is added to the concatenated list. Therefore, we can say that each pair of out-of-order elements in the original list is compared exactly once, and is counted as an inversion if the element in the second half appears before the element in the first half in the original list.
-
-Since we have shown that the algorithm works correctly for lists of length $n$, and we know that it works for lists of length $1$ according to the base case, we can conclude that the algorithm also works for lists of length $n+1$.
-
+### **INDUCTIVE STEP:** 
+We assume that the algorithm $mergeSort(list)$ where $list.length=n$ and $n>1$ works correctly, that is, it gives us the ascending sorted list and the number of reversals needed. By H.I (inductive hypothesis) we know that with $mergeSort(list2)$, where $list2.length=n+1$, the algorithm in the first execution enters $else$ last, where it splits the list in half $(\frac {n+1}{2})$ into two sublists: $(left, right)$. After this: on the one hand, it calls itself with $left$ as a parameter, obtaining as a result this ascending ordered list and the number of necessary inversions; otherwise, it calls itself with $right$ as a parameter, returning this ascending-ordered list and the number of inversions required. We can note that $left.length < n$ and that $right.length < n$, so, having already assumed that the algorithm works correctly for a list whose length is $n$, obviously it will work for these two sublists as well. successfully, returning the expected result. Now, looking at it further, the $mergeSort(...)$ function calls the $merge(List[Int], List[Int], Int)$ function, which merges both lists that are passed to it as a parameter and has the following conditions to order the elements of the lists, and that we will assume as correct and that returns the expected result. Recursive calls with $left$ and $right$ as parameters of $mergeSort$ will execute and keep calling $mergeSort$ recursively until, by the halving, they fall into the base case and return the same list and $0 $ as inversions, then the call to $merge$ will be executed sequentially to compare the elements of the lists and merge them, after all the recursive calls to $mergeSort(left)$ and to $mergeSort(right)$ have been executed, $merge(left, right, 0)$ will be called to join the lists depending on the order and return a specific number of investments, finally, we return the list resulting from $merge$ (already joined and ordered ascending) and the number of inversions that were necessary for $left$, for $right$ and for their union.
 
 ## **Improved Quicksort (Problem #2) - ImprovingQuickSort**
 

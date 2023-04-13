@@ -34,6 +34,12 @@ class DivideAndConquerTest extends munit.FunSuite {
     assert(DivideAndConquer.improvingQuickSort(voidList) == voidList)
   }
 
+  test("Randomized 3Way Partition:") {
+    assert(DivideAndConquer.randomized3WayPartition(List(10, 3, 6, 9), 2, 7, List(), List(), List())._1 == List())
+    assert(DivideAndConquer.randomized3WayPartition(List(1, 3, 22), 2, 10, List(), List(), List())._3 == List(22))
+    assert(DivideAndConquer.randomized3WayPartition(List(9, 7, 6, 0), 1, 8, List(), List(), List())._2 == List(6, 7))
+  }
+
   test("Mergesort:"){
     assert(DivideAndConquer.mergeSort(normalList)._1 == List(2, 3, 6, 7, 9, 10))
     assert(DivideAndConquer.mergeSort(repeatedList)._1 == List(2, 3, 6, 7, 9, 10, 10))
@@ -42,19 +48,10 @@ class DivideAndConquerTest extends munit.FunSuite {
     assert(DivideAndConquer.mergeSort(voidList)._1 == voidList)
   }
 
-  test("Randomized Quicksort:"){
-    assert(DivideAndConquer.randomizedQuickSort(normalList/*, 1, normalList.length, List()*/) == List(2, 3, 6, 7, 9, 10))
-    assert(DivideAndConquer.randomizedQuickSort(repeatedList/*, 1, repeatedList.length, List()*/) == List(2, 3, 6, 7, 9, 10, 10))
-    assert(DivideAndConquer.randomizedQuickSort(allRepeatedList/*, 1, allRepeatedList.length, List()*/) == List(1, 1, 1, 1, 1, 1))
-    assert(DivideAndConquer.randomizedQuickSort(sortedList/*, 1, sortedList.length, List()*/) == sortedList)
-    assert(DivideAndConquer.randomizedQuickSort(voidList/*, 1, voidList.length, List()*/) == voidList)
-    assert(DivideAndConquer.randomizedQuickSort(number3wayRepeatedList/*, 1, number3wayRepeatedList.length, List()*/) == List(1, 3, 7, 8, 10, 10, 10))
-  }
-
-  test("Randomized 3Way Partition:"){
-    assert(DivideAndConquer.randomized3WayPartition(List(10,3,6,9), 2, 7, List(), List(), List())._1 == List())
-    assert(DivideAndConquer.randomized3WayPartition(List(1,3,22), 2, 10, List(), List(), List())._3 == List(22))
-    assert(DivideAndConquer.randomized3WayPartition(List(9,7,6,0), 1, 8, List(), List(), List())._2 == List(6, 7))
+  test("Merge:"){
+    assert(DivideAndConquer.merge(List(10,7,3), List(6,2,9), 0)._1 == List(6,2,9,10,7,3))
+    assert(DivideAndConquer.merge(List(10,7,3), List(10,6,2,9), 0)._1 == List(10,7,3,10,6,2,9))
+    assert(DivideAndConquer.merge(List(1,1,1), List(1,1,1),0)._1 == List(1, 1, 1, 1, 1, 1))
   }
 
   val oneSetPoint: List[List[Int]] = List(List(0,0))
@@ -64,6 +61,13 @@ class DivideAndConquerTest extends munit.FunSuite {
   val oneRepeatedSetPoints: List[List[Int]] = List(List(0, 0), List(4, 9), List(-1, -3), List(-2, 1), List(-2, 1))
   val voidPoints: List[List[Int]] = List(List(), List(), List(), List())
   val oneVoidPoint: List[List[Int]] = List(List(), List(0,0), List(4,9), List(-1, -3))
+
+  test("QuickSort Points:") {
+    assert(DivideAndConquer.quickSortPoints(oneSetPoint,0 /*, 1, normalList.length, List()*/) == oneSetPoint)
+    assert(DivideAndConquer.quickSortPoints(repeatedSetPoints, 1 /*, 1, repeatedList.length, List()*/) == repeatedSetPoints)
+    assert(DivideAndConquer.quickSortPoints(normalSetPoints, 0 /*, 1, allRepeatedList.length, List()*/) == List(List(-2, 1), List(-1, -3), List(0, 0), List(4, 9)))
+    assert(DivideAndConquer.quickSortPoints(oneRepeatedSetPoints, 1 /*, 1, sortedList.length, List()*/) == List(List(-2, 1), List(-2, 1), List(-1, -3), List(0, 0), List(4, 9)))
+  }
 
   // I cast the result of the square root to String to only take 4 decimal places,
   // because the result is too long

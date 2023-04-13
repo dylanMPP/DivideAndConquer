@@ -147,29 +147,28 @@ For each list, an assertion will be made to validate that the `mergeSort(...)` f
 
 ### Expected Results
 
-We expect all assertions to pass successfully, indicating that the `mergeSort(...)` function is returning the input lists sorted in ascending order.
+We expect all assertions to pass successfully, indicating that the `mergeSort(...)` function is returning the input lists merged.
 
 ----
 
-## - **Randomized Quick Sort**
+## - **Merge:**
 
 ### Function
-We are going to use the `quickSort(list: List[Int], firstPos: Int, lastPos: Int)` function in these tests.
+We are going to use the `merge(left_list: List[Int], right_list: List[Int], countInv: Int)` function in these tests.
 
 ### Objective
-The objective of this test design is to validate the functionality of the `quickSort()` function on different types of lists.
+
+The objective of this test design is to validate the functionality of the `merge(...)` function on different types of lists.
 
 ### Test Plan
-Six lists with different characteristics will be used to evaluate the `quickSort()` function:
 
-1. `normalList`: List with non-repeated values and no specific order.
-2. `repeatedList`: List with repeated values and no specific order.
-3. `allRepeatedList`: List with repeated values and all equal.
-4. `sortedList`: List with values ordered in ascending order.
-5. `voidList`: Empty list.
-6. `number3wayRepeatedList`: List with repeated values that occur three times at the start, at the center and at the end.
+Three lists with different characteristics will be used to evaluate the `merge(...)` function:
 
-For each list, an assertion will be made to validate that the `quickSort()` function returns the list sorted in ascending order.
+1. `normalList (left, right)`: List with non-repeated values and no specific order.
+2. `repeatedList (left, right)`: List with repeated values and no specific order.
+3. `allRepeatedList (left, right)`: List with repeated values and all equal.
+
+For each list, an assertion will be made to validate that the `mergeSort(...)` function returns the list sorted in ascending order.
 
 ### Test Cases
 
@@ -178,13 +177,12 @@ For each list, an assertion will be made to validate that the `quickSort()` func
 | 1 | normalList | List(2,3,6,7,9,10) |
 | 2 | repeatedList | List(2,3,6,7,9,10,10) |
 | 3 | allRepeatedList | List(1,1,1,1,1,1) |
-| 4 | number3wayRepeatedList | List(1,3,7,8,10,10,10) |
-| 5 | sortedList | List(1,2,3,10,22) |
-| 6 | voidList | List() |
+| 4 | sortedList | List(1,2,3,10,22) |
+| 5 | voidList | List() |
 
 ### Expected Results
 
-We expect all assertions to pass successfully, indicating that the `quickSort()` function is returning the input lists sorted in ascending order.
+We expect all assertions to pass successfully, indicating that the `merge(...)` function is returning the input lists sorted in ascending order.
 
 ----
 

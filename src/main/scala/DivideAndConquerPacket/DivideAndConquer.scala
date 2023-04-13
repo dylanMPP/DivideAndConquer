@@ -360,45 +360,6 @@ object DivideAndConquer extends App with IDivideAndConquer {
 
   /**
    *
-   * Sorts a list according to the Randomized Quicksort
-   *
-   * @param list List to be sorted
-   * @return Sorted list
-   */
-  def randomizedQuickSort(list: List[Int]): List[Int] =
-    list match
-      case Nil => list
-      case head :: Nil => list
-      case head :: tail =>
-        val pivotPos = random(1, list.length)
-        val pivot = list(pivotPos - 1)
-
-        val valueHead = list.head
-        val exchangedList = list.updated(0, pivot).updated(pivotPos - 1, valueHead)
-
-        val (left, right): (List[Int], List[Int]) = randomizedPartition(exchangedList.tail, pivot, List(), List())
-        randomizedQuickSort(left) ::: (pivot :: randomizedQuickSort(right))
-
-  /**
-   *
-   * Randomized partition of a list according to its pivot
-   *
-   * @param list List to be sorted
-   * @param pivot Value previously selected to compare all the other values
-   * @param left Left sublist (less than pivot)
-   * @param right Right sublist (more or equal than pivot)
-   * @return Left sorted list, Right sorted list
-   */
-  @tailrec
-  def randomizedPartition(list: List[Int], pivot: Int, left: List[Int], right: List[Int]): (List[Int], List[Int]) =
-    list match
-      case Nil => (left, right)
-      case head :: tail =>
-        if (head < pivot) randomizedPartition(tail, pivot, head :: left, right)
-        else randomizedPartition(tail, pivot, left, head :: right)
-
-  /**
-   *
    * Euclidean distance, principal function
    *
    * @param firstPair First pair of points
