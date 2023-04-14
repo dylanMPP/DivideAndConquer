@@ -168,17 +168,15 @@ Three lists with different characteristics will be used to evaluate the `merge(.
 2. `repeatedList (left, right)`: List with repeated values and no specific order.
 3. `allRepeatedList (left, right)`: List with repeated values and all equal.
 
-For each list, an assertion will be made to validate that the `mergeSort(...)` function returns the list sorted in ascending order.
+For each list, an assertion will be made to validate that the `merge(...)` function returns the sublists sorted in ascending order.
 
 ### Test Cases
 
-| Test Case | Input List | Expected Result |
-|---|---|---|
-| 1 | normalList | List(2,3,6,7,9,10) |
-| 2 | repeatedList | List(2,3,6,7,9,10,10) |
-| 3 | allRepeatedList | List(1,1,1,1,1,1) |
-| 4 | sortedList | List(1,2,3,10,22) |
-| 5 | voidList | List() |
+| Test Case | Input List                                  | Expected Result |
+|---|---------------------------------------------|---|
+| 1 | normalList (List(10,7,3), List(6,2,9))      | List(2,3,6,7,9,10) |
+| 2 | repeatedList (List(10,7,3), List(10,6,2,9)) | List(2,3,6,7,9,10,10) |
+| 3 | allRepeatedList (List(1,1,1), List(1,1,1))  | List(1,1,1,1,1,1) |
 
 ### Expected Results
 
@@ -219,6 +217,69 @@ For each set of points, an assertion will be made to validate that the `closestP
 
 ### Expected Results
 We expect all assertions to pass successfully, indicating that the `closestPoints(...)` function is returning the expected result for each set of points.
+
+----
+
+## - **Merge Sort Points**
+
+### Function
+We are going to use the `mergeSortPoints(list: List[List[Int]], whichPoints: Int)` function in these tests.
+
+### Objective
+The objective of this test design is to validate the functionality of the `mergeSortPoints(...)` function using different types of sets of points.
+
+### Test Plan
+Four sets of points with different characteristics will be used to evaluate the `mergeSortPoints(...)` function:
+- `oneSetPoint:` List with only one pair of points.
+- `normalSetPoints:` List with non-repeated points and no specific order.
+- `repeatedSetPoints:` List with repeated points.
+- `oneRepeatedSetPoints:` List with only one repeated point.
+
+For each set of points, an assertion will be made to validate that the `mergeSortPoints(...)` function returns the correct result.
+
+### Test Cases
+| Test Case | Input Points | Expected Result                                                |
+|----------|--------------|----------------------------------------------------------------|
+| 1        | oneSetPoint | oneSetPoint                                                    |
+| 2        | normalSetPoints    | List(List(-2,1), List(-1,-3), List(0,0), List(4,9))            |
+| 3        | repeatedSetPoints | repeatedSetPoints                                              |
+| 4        | oneRepeatedSetPoints | List(List(-1,-3), List(0,0), List(-2,1), List(-2,1), List(4,9) |
+
+### Expected Results
+We expect all assertions to pass successfully, indicating that the `mergeSortPoints(...)` function is returning the expected result for each set of points.
+
+----
+
+## - **Merge Points:**
+
+### Function
+We are going to use the `mergePoints(left_list: List[Int], right_list: List[Int], whichPoints: Int)` function in these tests.
+
+### Objective
+
+The objective of this test design is to validate the functionality of the `mergePoints(...)` function on different types of lists.
+
+### Test Plan
+
+Three lists with different characteristics will be used to evaluate the `mergePoints(...)` function:
+
+1. `threeSetPoints (left, right)`: List with three pair of points.
+2. `repeatedSetPoints (left, right)`: List with repeated points.
+3. `oneRepeatedSetPoints (left, right)`: List with only one repeated point.
+
+For each list, an assertion will be made to validate that the `mergePoints(...)` function returns the sublists sorted in ascending order.
+
+### Test Cases
+
+| Test Case | Input List                                                     | Expected Result                                                     |
+|---|----------------------------------------------------------------|---------------------------------------------------------------------|
+| 1 | threeSetPoints (List(List(0, 0), List(0,1)), List(List(1, 1))) | threeSetPoints                                                      |
+| 2 | repeatedSetPoints (List(List(4, 9), List(4,9), List(4,9)), List(List(4, 9), List(4,9))               | repeatedSetPoints                                                   |
+| 3 | oneRepeatedSetPoints (List(List(0, 0), List(4, 9), List(-1, -3)), List(List(-2, 1), List(-2, 1))                | List(List(-2, 1), List(-2, 1),List(0, 0), List(4, 9), List(-1, -3)) |
+
+### Expected Results
+
+We expect all assertions to pass successfully, indicating that the `mergePoints(...)` function is returning the input lists sorted in ascending order.
 
 ----
 
