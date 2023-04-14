@@ -82,12 +82,12 @@ class DivideAndConquerTest extends munit.FunSuite {
     val oneVoidPointR = DivideAndConquer.closestPoints(oneVoidPoint)
 
     assert(DivideAndConquer.closestPoints(oneSetPoint) == -1.0)
-    assert(threeSetPointsR == 1.0)
-    assert(normalSetPointsR == 2.2360688956433634) // sqrt of 5
+    assert(threeSetPointsR == 1.0000)
+    assert(normalSetPointsR == 2.2360) // sqrt of 5
     assert(DivideAndConquer.closestPoints(repeatedSetPoints) == -1.0) // error
-    assert(oneRepeatedSetPointsR == 2.2360688956433634) // sqrt of 5
+    assert(oneRepeatedSetPointsR == 2.2360) // sqrt of 5
     assert(DivideAndConquer.closestPoints(voidPoints) == -1.0) // error
-    assert(oneVoidPointR== 3.162277665175675) // sqrt of 10
+    assert(oneVoidPointR== 3.1622) // sqrt of 10
   }
 
   val setPoints1: List[List[Int]] = List(List(0, 0), List(-1, -3), List(-2, 1))

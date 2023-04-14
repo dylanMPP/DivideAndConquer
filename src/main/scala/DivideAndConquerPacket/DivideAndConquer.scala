@@ -114,7 +114,7 @@ object DivideAndConquer extends App with IDivideAndConquer {
       if (xMinDistance == Int.MaxValue && yMinDistance == Int.MaxValue) {
         -1.0
       } else {
-        min(xMinDistance, yMinDistance)
+        BigDecimal(min(xMinDistance, yMinDistance)).setScale(4, BigDecimal.RoundingMode.DOWN).toString.toDouble
       }
     }
 
