@@ -71,18 +71,23 @@ class DivideAndConquerTest extends munit.FunSuite {
 
   // I cast the result of the square root to String to only take 4 decimal places,
   // because the result is too long
-  val df = new DecimalFormat("#.0000")
-  val df2 = new DecimalFormat("#0.0")
+  //val df = new DecimalFormat("#.0000")
+  //val df2 = new DecimalFormat("#0.0")
 
   test("Closest Points:") {
+    val threeSetPointsR = DivideAndConquer.closestPoints(threeSetPoints)
+    val normalSetPointsR = DivideAndConquer.closestPoints(normalSetPoints)
+    val oneRepeatedSetPointsR = DivideAndConquer.closestPoints(oneRepeatedSetPoints)
+    val oneVoidPointR = DivideAndConquer.closestPoints(oneVoidPoint)
+
     assert(DivideAndConquer.closestPoints(oneSetPoint) == -1.0)
     println(DivideAndConquer.closestPoints(List(List(0,0), List(2,2))))
-    assert(df.format((DivideAndConquer.closestPoints(threeSetPoints))) == "1,0000")
-    assert(df.format((DivideAndConquer.closestPoints(normalSetPoints))) == "2,2361") // sqrt of 5
+    assert(f"$threeSetPointsR%.4f" == "1,0000")
+    assert(f"$normalSetPointsR%.4f" == "2,2361") // sqrt of 5
     assert(DivideAndConquer.closestPoints(repeatedSetPoints) == -1.0) // error
-    assert(df.format(DivideAndConquer.closestPoints(oneRepeatedSetPoints)) == "2,2361") // sqrt of 5
+    assert(f"$oneRepeatedSetPointsR%.4f" == "2,2361") // sqrt of 5
     assert(DivideAndConquer.closestPoints(voidPoints) == -1.0) // error
-    assert(df.format(DivideAndConquer.closestPoints(oneVoidPoint)) == "3,1623") // sqrt of 10
+    assert(f"$oneVoidPointR%.4f"== "3,1623") // sqrt of 10
   }
 
   val setPoints1: List[List[Int]] = List(List(0, 0), List(-1, -3), List(-2, 1))
@@ -106,9 +111,12 @@ class DivideAndConquerTest extends munit.FunSuite {
   }
 
   test("Find Min Distance:"){
-    assert(df.format((DivideAndConquer.findMinDistance(setPoints1, Int.MaxValue))) == "2,2361")
+    val setPoints1R = DivideAndConquer.findMinDistance(setPoints1, Int.MaxValue)
+    val setPoints2R = DivideAndConquer.findMinDistance(setPoints2, Int.MaxValue)
+
+    assert(f"$setPoints1R%.4f" == "2,2361")
     assert(DivideAndConquer.findMinDistance(setVoidPoints, Int.MaxValue) == Int.MaxValue)
-    assert(df.format((DivideAndConquer.findMinDistance(setPoints2, Int.MaxValue))) == "1,0000")
+    assert(f"$setPoints2R%.4f" == "1,0000")
   }
 
   val firstPair: List[Int] = List(0,0)
@@ -118,12 +126,17 @@ class DivideAndConquerTest extends munit.FunSuite {
   val samePair: List[Int] = List(9,1)
 
   test("Euclidean Distance:") {
-    assert(df.format(DivideAndConquer.euclideanDistance(firstPair, secondPair)) == "9,8489")
-    assert(df.format(DivideAndConquer.euclideanDistance(firstPair, thirdPair)) == "3,1623")
-    assert(df.format(DivideAndConquer.euclideanDistance(secondPair, thirdPair)) == "7,8103")
+    val firstSecondPairR = DivideAndConquer.euclideanDistance(firstPair, secondPair)
+    val firstThirdPairR = DivideAndConquer.euclideanDistance(firstPair, thirdPair)
+    val secondThirdPairR = DivideAndConquer.euclideanDistance(secondPair, thirdPair)
+    val samePairR = DivideAndConquer.euclideanDistance(samePair, samePair)
+
+    assert(f"$firstSecondPairR%.4f" == "9,8489")
+    assert(f"$firstThirdPairR%.4f" == "3,1623")
+    assert(f"$secondThirdPairR%.4f" == "7,8103")
     assert(DivideAndConquer.euclideanDistance(voidPair, secondPair) == -1.0)
     assert(DivideAndConquer.euclideanDistance(thirdPair, voidPair) == -1.0)
-    assert(df2.format(DivideAndConquer.euclideanDistance(samePair, samePair)) == "0,0")
+    assert(f"$samePairR%.1f"== "0,0")
   }
 
   val number1ToSquareRoot: Int = 4
@@ -131,9 +144,13 @@ class DivideAndConquerTest extends munit.FunSuite {
   val number3ToSquareRoot: Int = 0
 
   test("Square Root:") {
-    assert(df.format(DivideAndConquer.squareRoot(number1ToSquareRoot)) == "2,0000")
-    assert(df.format(DivideAndConquer.squareRoot(number2ToSquareRoot)) == "1,4142")
-    assert(df2.format(DivideAndConquer.squareRoot(number3ToSquareRoot)) == "0,0")
+    val number1SqrtR = DivideAndConquer.squareRoot(number1ToSquareRoot)
+    val number2SqrtR = DivideAndConquer.squareRoot(number2ToSquareRoot)
+    val number3SqrtR = DivideAndConquer.squareRoot(number3ToSquareRoot)
+
+    assert(f"$number1SqrtR%.4f" == "2,0000")
+    assert(f"$number2SqrtR%.4f" == "1,4142")
+    assert(f"$number3SqrtR%.1f" == "0,0")
   }
 
   val number1: Int = 2
