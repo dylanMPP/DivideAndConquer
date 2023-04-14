@@ -74,9 +74,9 @@ object DivideAndConquer extends App with IDivideAndConquer {
     list match
       case Nil => (left, center, right)
       case head :: tail =>
-        if (head < pivot2 && head > pivot) {
+        if (head <= pivot2 && head > pivot) {
           randomized3WayPartition(tail, pivot, pivot2, left, head :: center, right)
-        } else if (head < pivot) {
+        } else if (head <= pivot) {
           randomized3WayPartition(tail, pivot, pivot2, head :: left, center, right)
         } else {
           randomized3WayPartition(tail, pivot, pivot2, left, center, head :: right)

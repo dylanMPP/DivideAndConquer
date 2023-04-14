@@ -83,7 +83,7 @@ In this problem we use different recursive functions, but itself isn’t one, so
         
         O(n) = O(n ^ log_{2} 2 - ε)
         
-        O(n) = O(n ^ 1 - ε) → NO, it isn’t fullfilled, since it doesn’t bound above (it is not greater)
+        O(n) = O(n ^ 1 - ε) → NO, it isn’t fulfilled, since it doesn’t bound above (it is not greater)
         
     
     1. ***T(n) = Θ(n ^ log_{b} {a} log n),*** **if:**
@@ -137,7 +137,7 @@ In this problem we use different recursive functions, but itself isn’t one, so
         
         O(1) = O(n ^ log_{2} {1} - ε)
         
-        O(1) = O(n ^ 0 - ε) → NO, it isn’t fullfilled, since it doesn’t bound above (it is not greater)
+        O(1) = O(n ^ 0 - ε) → NO, it isn’t fulfilled, since it doesn’t bound above (it is not greater)
         
     2. ***T(n) = Θ(n ^ log_{b} {a} log n),*** **if:**
         
@@ -147,7 +147,7 @@ In this problem we use different recursive functions, but itself isn’t one, so
         
         O(1) = Θ(n ^ 0)
         
-        **O(1) = Θ(1)** → YES, it’s fullfilled, because is narrowly bounded (they are equal)
+        **O(1) = Θ(1)** → YES, it’s fulfilled, because is narrowly bounded (they are equal)
         
     
   Then, the temporal complexity is:
@@ -162,7 +162,7 @@ In this problem we use different recursive functions, but itself isn’t one, so
     
   $$T(n) = T(n-1) + O(\log n) + O(1)$$
     
-  We see actually that O(1) doesn’t affects the temporal complexity, so we can express the recurrence relation as:
+  We see actually that O(1) doesn’t affect the temporal complexity, so we can express the recurrence relation as:
     
   $$T(n) = T(n-1) + O(\log n)$$
     

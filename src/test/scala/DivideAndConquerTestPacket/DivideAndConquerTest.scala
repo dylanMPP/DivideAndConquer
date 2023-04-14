@@ -66,7 +66,7 @@ class DivideAndConquerTest extends munit.FunSuite {
     assert(DivideAndConquer.quickSortPoints(oneSetPoint,0 /*, 1, normalList.length, List()*/) == oneSetPoint)
     assert(DivideAndConquer.quickSortPoints(repeatedSetPoints, 1 /*, 1, repeatedList.length, List()*/) == repeatedSetPoints)
     assert(DivideAndConquer.quickSortPoints(normalSetPoints, 0 /*, 1, allRepeatedList.length, List()*/) == List(List(-2, 1), List(-1, -3), List(0, 0), List(4, 9)))
-    assert(DivideAndConquer.quickSortPoints(oneRepeatedSetPoints, 1 /*, 1, sortedList.length, List()*/) == List(List(-2, 1), List(-2, 1), List(-1, -3), List(0, 0), List(4, 9)))
+    assert(DivideAndConquer.quickSortPoints(oneRepeatedSetPoints, 1 /*, 1, sortedList.length, List()*/) == List(List(-1, -3), List(0, 0), List(-2, 1), List(-2, 1), List(4, 9)))
   }
 
   // I cast the result of the square root to String to only take 4 decimal places,
@@ -76,6 +76,7 @@ class DivideAndConquerTest extends munit.FunSuite {
 
   test("Closest Points:") {
     assert(DivideAndConquer.closestPoints(oneSetPoint) == -1.0)
+    println(DivideAndConquer.closestPoints(List(List(0,0), List(2,2))))
     assert(df.format((DivideAndConquer.closestPoints(threeSetPoints))) == "1,0000")
     assert(df.format((DivideAndConquer.closestPoints(normalSetPoints))) == "2,2361") // sqrt of 5
     assert(DivideAndConquer.closestPoints(repeatedSetPoints) == -1.0) // error
