@@ -94,7 +94,7 @@ We are going to find the temporal complexity of the three problems with the **Ma
     
   In the 'Recurrence Relation' document we already defined the recurrence relations of the functions that this function uses and their temporal complexities, now we only have to add these complexities (depending on the number of functions that use this main function) and simplify, to find the total time complexity. So:
     
-  **T(n) = noVoidPoints() + 2[quickSortPoints()] + 3[findMinDistance()] + 2[min()] + notExceedD() + middleLine()**
+  **T(n) = noVoidPoints() + 2[mergeSortPoints()] + 3[findMinDistance()] + 2[min()] + notExceedD() + middleLine()**
     
   T(n) = O(n) + 2[ O(n log n) ] + 3[ 3O(n) + O(n log n) ] + 2[ O(1) ] + O(n) + O(1)
     

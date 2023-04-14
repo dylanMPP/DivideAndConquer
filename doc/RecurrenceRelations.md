@@ -55,19 +55,19 @@ In this problem we use different recursive functions, but itself isn’t one, so
 | min() | O(1) |
 | minDistanceOfPairDistances | O(n) |
 
-- **Quick Sort Points:**
+- **Merge Sort Points:**
     
-  We are going to find an average recurrence relation, because since the algorithm performs a partition of the list and compares all the elements with the pivots, there is a 'worst case' in which the complexity of the algorithm, like the classic QuickSort, is **O(n^2).**
+  We have already calculated the recurrence relation of the Merge Sort up, in the 'numberOfInversions' problem. Then we can
+
+  use it here because the change is that we now are going to compare the points that the parameter indicate (0 - X or 1 - Y),
+
+  and it doesn't affect the time complexity of the algorithm, because essentially it's the same comparison (one number and another number). 
+
+  So, the recurrence relation is:
+
+  $$T(n) = 2T(n/2) + O(n)$$
     
-  Let's think that the list is of length 0 [T(0)] or of length 1 [T(1)], in that case its temporal complexity will be **O(1)**, because if the length of the input list is less than or equal to to 1, it takes constant time regardless of the size of the input, since if n = 0, the list is empty, so there's nothing to sort and we can't split into sublists, and if n = 1, there's nothing either to sort, since there is only one element, which is sorted.
-    
-  Now, let's look at the cases where n > 1. In these cases, first we will obtain the random pivot, then, we will call the function 'randomizedPartitionPoints', which divides the list into two parts (left, right) and now we will call, for each resulting sublist (left, right), recursively again to 'quickSortPoints'. Thus, we can notice that for the first resulting sublist **(left)** the recursive call will be with a list whose elements are less or equal than the pivot, that is **T(q)** and for the second resulting sublist **(right)** the recursive call will be with a list whose elements are greater than the pivot, that is **T(n-q)**
-    
-  Now, let's look at the cost of partitioning the list, which takes **O(n)** in the worst case. Partitioning is the operation that divides the list into two sublists, which occurs when the list is sorted in ascending or descending order, and the chosen pivot is the minimum or maximum of the list. So, the recurrence relation is:
-    
-  $$T(n) = T(q) + T(n-q) + O(n)$$
-    
-  Lets calculate its temporal complexity with the Master Method:
+  Let's calculate its temporal complexity with the Master Method:
     
   **a** = 2 (two recursive calls)
     

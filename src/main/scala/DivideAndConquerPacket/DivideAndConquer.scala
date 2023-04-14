@@ -95,7 +95,7 @@ object DivideAndConquer extends App with IDivideAndConquer {
     if(listWithNoVoidPoints == Nil || listWithNoVoidPoints.length == 1){
       -1.0
     } else {
-      val xPoints = quickSortPoints(listWithNoVoidPoints, 0) // O(n lg n)
+      val xPoints = mergeSortPoints(listWithNoVoidPoints, 0) // O(n lg n)
 
       val (xd1, xd2) = xPoints splitAt (xPoints.length / 2)
       val xd1Min = findMinDistance(xd1, Int.MaxValue) // O(n)
@@ -105,7 +105,7 @@ object DivideAndConquer extends App with IDivideAndConquer {
 
       val notExceedXMinDistance = notExceedD(listWithNoVoidPoints, middleLine(xPoints), xMinDistance, List()) // O(n)
 
-      val yPoints = quickSortPoints(notExceedXMinDistance, 1)
+      val yPoints = mergeSortPoints(notExceedXMinDistance, 1)
       val yMinDistance = findMinDistance(yPoints, Int.MaxValue)
 
       // Como INT MAX VALUE es el min que paso para comparar, si aun haciendo el
@@ -200,48 +200,54 @@ object DivideAndConquer extends App with IDivideAndConquer {
    *
    * Sort a list of pair of points (according to X or Y) with QuickSort
    *
-   * @param list List to be sorted
+   * @param list        List to be sorted
    * @param whichPoints X or Y points
    * @return Sorted list according to the specified points
    */
   // Sort the points by X or Y
-  def quickSortPoints(list: List[List[Int]], whichPoints: Int): List[List[Int]] =
-    list match
-      case Nil => list
-      case head :: Nil => list
-      case head :: tail =>
-        val pivotPos = random(1, list.length)
-        val pivot = list(pivotPos - 1)
+  def mergeSortPoints(list: List[List[Int]], whichPoints: Int): (List[List[Int]]) =
+    if (list.length <= 1) (list)
+    else {
+      val (left, right) = list.splitAt(list.length / 2)
+      val (leftSorted) = mergeSortPoints(left, whichPoints)
+      val (rightSorted) = mergeSortPoints(right, whichPoints)
+      val (merged) = mergePoints(leftSorted, rightSorted, whichPoints)
+      merged
+    }
 
-        val valueHead = list.head
-        val exchangedList = list.updated(0, pivot).updated(pivotPos - 1, valueHead)
-
-        val (left, right): (List[List[Int]], List[List[Int]]) = randomizedPartitionPoints(exchangedList.tail, pivot, List(), List(), whichPoints)
-        quickSortPoints(left, whichPoints) ::: (pivot :: quickSortPoints(right, whichPoints))
 
   /**
    *
    * Partition of the list of pair of points for X or Y
    *
-   * @param list List to be sort
-   * @param pivot Value to compare all the rest values
-   * @param left Left part of the given list
-   * @param right Right part of the given list
+   * @param list_left        Left part of the given list
+   * @param list_right       Right part of the given list
    * @param whichPoints Is the indicator that tells the algorithm if we order the list respect to x or respect to y
    * @return The two partitions of pair of points
    */
-  @tailrec
-  def randomizedPartitionPoints(list: List[List[Int]], pivot: List[Int], left: List[List[Int]], right: List[List[Int]], whichPoints: Int): (List[List[Int]], List[List[Int]]) =
-    list match
-      case Nil => (left, right)
-      case head :: tail =>
-        if(whichPoints == 0){
-          if (head.head < pivot.head) randomizedPartitionPoints(tail, pivot, head :: left, right, whichPoints)
-          else randomizedPartitionPoints(tail, pivot, left, head :: right, whichPoints)
+  def mergePoints(list_left: List[List[Int]], list_right: List[List[Int]], whichPoints: Int): (List[List[Int]]) =
+    (list_left, list_right) match {
+      case (Nil, _) => (list_right)
+      case (_, Nil) => (list_left)
+      case (head1 :: tail1, head2 :: tail2) =>
+        if (whichPoints == 0) {
+          if (head1.head <= head2.head) {
+            val (merged) = mergePoints(tail1, list_right, whichPoints)
+            (head1 :: merged)
+          } else {
+            val (merged) = mergePoints(list_left, tail2, whichPoints)
+            (head2 :: merged)
+          }
         } else {
-          if (head(1) < pivot(1)) randomizedPartitionPoints(tail, pivot, head :: left, right, whichPoints)
-          else randomizedPartitionPoints(tail, pivot, left, head :: right, whichPoints)
+          if (head1(1) <= head2(1)) {
+            val (merged) = mergePoints(tail1, list_right, whichPoints)
+            (head1 :: merged)
+          } else {
+            val (merged) = mergePoints(list_left, tail2, whichPoints)
+            (head2 :: merged)
+          }
         }
+    }
 
   /**
    *

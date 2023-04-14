@@ -63,11 +63,11 @@ class DivideAndConquerTest extends munit.FunSuite {
   val voidPoints: List[List[Int]] = List(List(), List(), List(), List())
   val oneVoidPoint: List[List[Int]] = List(List(), List(0,0), List(4,9), List(-1, -3))
 
-  test("QuickSort Points:") {
-    assert(DivideAndConquer.quickSortPoints(oneSetPoint,0 /*, 1, normalList.length, List()*/) == oneSetPoint)
-    assert(DivideAndConquer.quickSortPoints(repeatedSetPoints, 1 /*, 1, repeatedList.length, List()*/) == repeatedSetPoints)
-    assert(DivideAndConquer.quickSortPoints(normalSetPoints, 0 /*, 1, allRepeatedList.length, List()*/) == List(List(-2, 1), List(-1, -3), List(0, 0), List(4, 9)))
-    assert(DivideAndConquer.quickSortPoints(oneRepeatedSetPoints, 1 /*, 1, sortedList.length, List()*/) == List(List(-1, -3), List(0, 0), List(-2, 1), List(-2, 1), List(4, 9)))
+  test("Merge Sort Points:") {
+    assert(DivideAndConquer.mergeSortPoints(oneSetPoint,0 /*, 1, normalList.length, List()*/) == oneSetPoint)
+    assert(DivideAndConquer.mergeSortPoints(repeatedSetPoints, 1 /*, 1, repeatedList.length, List()*/) == repeatedSetPoints)
+    assert(DivideAndConquer.mergeSortPoints(normalSetPoints, 0 /*, 1, allRepeatedList.length, List()*/) == List(List(-2, 1), List(-1, -3), List(0, 0), List(4, 9)))
+    assert(DivideAndConquer.mergeSortPoints(oneRepeatedSetPoints, 1 /*, 1, sortedList.length, List()*/) == List(List(-1, -3), List(0, 0), List(-2, 1), List(-2, 1), List(4, 9)))
   }
 
   // I cast the result of the square root to String to only take 4 decimal places,
