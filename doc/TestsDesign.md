@@ -332,14 +332,132 @@ Three sets of points with different characteristics will be used to evaluate the
 For each set of points, an assertion will be made to validate that the `middleLine(...)` function returns the correct result.
 
 ### Test Cases
-| Test Case | Input Points      | Expected Result                         |
-|----------|-------------------|-----------------------------------------|
-| 1        | repeatedSetPoints      | List(4.0,9.0)                             |
-| 2        | normalSetPoints   | List(1.5,3.0)                 |
+| Test Case | Input Points         | Expected Result                         |
+|----------|----------------------|-----------------------------------------|
+| 1        | repeatedSetPoints    | List(4.0,9.0)                             |
+| 2        | normalSetPoints      | List(1.5,3.0)                 |
 | 3        | oneRepeatedSetPoints | List(-1.0,-3.0)              |
 
 ### Expected Results
 We expect all assertions to pass successfully, indicating that the `middleLine(...)` function is returning the expected result for each set of points.
+
+----
+
+## - **Not Exceed D:**
+
+### Function
+We are going to use the `notExceedD(list: List[List[Int]], middleLine: List[Double], d: double, resultList: List[List[Int]])` function in these tests.
+
+### Objective
+The objective of this test design is to validate the functionality of the `notExceedD(...)` function using different types of sets of points.
+
+### Test Plan
+Three sets of points with different characteristics will be used to evaluate the `notExceedD(...)` function:
+- `repeatedSetPoints:` List with repeated points.
+- `normalSetPoints:` List with non-repeated points and no specific order.
+- `threeSetPoints:` List with only one repeated point.
+
+Two 'middleLine' and one 'd' will be used to evaluate the `notExceedD(...)` function:
+- `positiveMiddleLine:` Positive number.
+- `negativeMiddleLine:` Negative number.
+- `d:` Positive number (distance).
+
+For each set of points, an assertion will be made to validate that the `notExceedD(...)` function returns the correct result.
+
+### Test Cases
+| Test Case | Input Points                             | Expected Result                  |
+|----------|------------------------------------------|----------------------------------|
+| 1        | normalSetPoints, positiveMiddleLine, d   | List(List(-1, -3), List(0, 0))                 |
+| 2        | repeatedSetPoints, negativeMiddleLine, d | List()                 |
+| 3        | threeSetPoints, positiveMiddleLine, d    | List(List(1, 1), List(0, 1), List(0, 0))       |
+
+### Expected Results
+We expect all assertions to pass successfully, indicating that the `notExceedD(...)` function is returning the expected result for each set of points.
+
+----
+
+## - **Min:**
+
+### Function
+We are going to use the `min(value: Double, value2: Double)` function in these tests.
+
+### Objective
+The objective of this test design is to validate the functionality of the `min(...)` function using different double numbers.
+
+### Test Plan
+Three double numbers with different characteristics will be used to evaluate the `min(...)` function:
+- `positiveNumber:` Positive double number.
+- `positiveNumber2:` Positive double number.
+- `negativeNumber:` Negative double number.
+
+For each set of points, an assertion will be made to validate that the `min(...)` function returns the correct result.
+
+### Test Cases
+| Test Case | Input Points                    | Expected Result |
+|----------|---------------------------------|-----------------|
+| 1        | positiveNumber, negativeNumber  | negativeNumber  |
+| 2        | negativeNumber, negativeNumber  | negativeNumber  |
+| 3        | positiveNumber, positiveNumber2 | positiveNumber  |
+
+### Expected Results
+We expect all assertions to pass successfully, indicating that the `min(...)` function is returning the expected result.
+
+----
+
+## - **Parallel Fors Min Distance:**
+
+### Function
+We are going to use the `parallelForsMinDistance(pair: List[Int], list: List[List[Int]], distances: List[Double])` function in these tests.
+
+### Objective
+The objective of this test design is to validate the functionality of the `parallelForsMinDistance(...)` function using different types of sets of points.
+
+### Test Plan
+Three sets of points with different characteristics will be used to evaluate the `parallelForsMinDistance(...)` function:
+- `threeSetPoints:` List with only one repeated point.
+- `normalSetPoints:` List with non-repeated points and no specific order.
+- `repeatedSetPoints:` List with repeated points.
+
+For each set of points, an assertion will be made to validate that the `parallelForsMinDistance(...)` function returns the correct result.
+
+### Test Cases
+| Test Case | Input Points | Expected Result    |
+|-----------|------------|--------------------|
+| 1         | threeSetPoints | 1.0                |
+| 2         | normalSetPoints | 2.2360688956433634 |
+| 3         | repeatedSetPoints | 2.147483647E9      |
+
+
+### Expected Results
+We expect all assertions to pass successfully, indicating that the `parallelForsMinDistance(...)` function is returning the expected result for each set of points.
+
+----
+
+## - **Min Distance Of Pairs Distances:**
+
+### Function
+We are going to use the `minDistanceOfPairsDistances(distancesList: List[Double], min: Double)` function in these tests.
+
+### Objective
+The objective of this test design is to validate the functionality of the `minDistanceOfPairsDistances(...)` function using different distances lists.
+
+### Test Plan
+Three double numbers with different characteristics will be used to evaluate the `minDistanceOfPairsDistances(...)` function:
+- `distances:` Normal distances.
+- `repeatedDistances:` Two repeated distances in a normal list of distances.
+- `voidDistances:` No distances.
+
+For each set of points, an assertion will be made to validate that the `minDistanceOfPairsDistances(...)` function returns the correct result.
+
+### Test Cases
+| Test Case | Input Points      | Expected Result |
+|----------|-------------------|-----------------|
+| 1        | distances         | 0.99            |
+| 2        | repeatedDistances | 1.1             |
+| 3        | voidDistances     | Int.MaxValue    |
+
+### Expected Results
+We expect all assertions to pass successfully, indicating that the `minDistanceOfPairsDistances(...)` function is returning the expected result.
 
 ----
 

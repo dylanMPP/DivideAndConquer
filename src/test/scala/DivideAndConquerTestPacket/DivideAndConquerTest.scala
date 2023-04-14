@@ -116,6 +116,46 @@ class DivideAndConquerTest extends munit.FunSuite {
     assert(DivideAndConquer.middleLine(oneRepeatedSetPoints) == List(-1.0,-3.0))
   }
 
+  val positiveMiddleLine: List[Double] = List(1.0, 2.0)
+  val negativeMiddleLine: List[Double] = List(-2.0,0.0)
+  val d: Double = 2.9
+
+  test("Not Exceed D:") {
+    assert(DivideAndConquer.notExceedD(normalSetPoints, positiveMiddleLine, d, List()) == List(List(-1, -3), List(0, 0)))
+    assert(DivideAndConquer.notExceedD(repeatedSetPoints, negativeMiddleLine, d, List()) == List())
+    assert(DivideAndConquer.notExceedD(threeSetPoints, positiveMiddleLine, d, List()) == List(List(1, 1), List(0, 1), List(0, 0)))
+  }
+
+  val positiveNumber: Double = 2.12
+  val positiveNumber2: Double = 5.75
+  val negativeNumber: Double = -8.9
+
+  test("Min:"){
+    assert(DivideAndConquer.min(positiveNumber, negativeNumber) == -8.9)
+    assert(DivideAndConquer.min(negativeNumber, negativeNumber) == -8.9)
+    assert(DivideAndConquer.min(positiveNumber, positiveNumber2) == 2.12)
+  }
+
+  test("Parallel Fors Min Distance:"){
+    val threeSetPointsR = DivideAndConquer.parallelForsMinDistance(threeSetPoints.head, threeSetPoints.tail, List())
+    val normalSetPointsR = DivideAndConquer.parallelForsMinDistance(normalSetPoints.head, normalSetPoints.tail, List())
+    val repeatedSetPointsR = DivideAndConquer.parallelForsMinDistance(repeatedSetPoints.head, repeatedSetPoints.tail, List())
+
+    assert(threeSetPointsR == 1.0)
+    assert(normalSetPointsR == 2.2360688956433634)
+    assert(repeatedSetPointsR == 2.147483647E9)
+  }
+
+  val distances: List[Double] = List(1.0, 0.03125, 3.82, 0.99)
+  val repeatedDistances: List[Double] = List(2.0, 1.1, 9.24, 1.1)
+  val voidDistances: List[Double] = List()
+
+  test("Min Distance Of Pair Distances:"){
+    assert(DivideAndConquer.minDistanceOfPairDistances(distances, Int.MaxValue) == 0.99)
+    assert(DivideAndConquer.minDistanceOfPairDistances(repeatedDistances, Int.MaxValue) == 1.1)
+    assert(DivideAndConquer.minDistanceOfPairDistances(voidDistances, Int.MaxValue) == Int.MaxValue)
+  }
+
   test("Find Min Distance:"){
     val setPoints1R = DivideAndConquer.findMinDistance(setPoints1, Int.MaxValue)
     val setPoints2R = DivideAndConquer.findMinDistance(setPoints2, Int.MaxValue)
