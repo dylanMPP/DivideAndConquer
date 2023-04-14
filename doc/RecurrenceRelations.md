@@ -36,11 +36,13 @@
     
   Let's think that the list is of length 0 [T(0)] or of length 1 [T(1)], in that case its temporal complexity will be **O(1)**, because if the length of the input list is less than or equal to 1, it takes constant time regardless of the size of the input, since if n = 0, the list is empty, so there's nothing to sort and we can't split into sublists, and if n = 1, there's nothing either to sort, since there is only one element, which is sorted.
     
-  Now, let's look at the cases where n > 1. In these cases, first we will obtain the 2 random pivots, let's call their positions as **'q1' and 'q2' (in the future sorted list)**, where list(q1) < list(q2) (we make that verification in the algorithm), then, with these pivots, we will call the function 'randomized3WayPartition', which divides the list into three parts (those already mentioned above) and now we will call, for each resulting sublist (left, center, right), recursively again to 'improvingQuickSort'. Thus, we can notice that for the first resulting sublist **(left)** the recursive call will be with a list whose elements are less or equal than the pivot of position is 'q1', that is **T(q1)**, that for the second resulting sublist **(center)** the recursive call will be with a list whose elements are greater than the pivot of position 'q1' and less or equal than the pivot of position 'q2', that is **T(q2-q1)**, and that for the third resulting sublist **(right)** the recursive call will be with a list whose elements are greater than the pivot of position 'q2', that is **T(n-q2)**. 
+  Now, let's look at the cases where n > 1. In these cases, first we will obtain the 2 random pivots, let's call their positions as **'q1' and 'q2' (in the future sorted list)**, where list(q1) < list(q2) (we make that verification in the algorithm), then, with these pivots, we will call the function 'randomized3WayPartition', which divides the list into three parts (those already mentioned above) and now we will call, for each resulting sublist (left, center, right), recursively again to 'improvingQuickSort'. 
+
+  So, we can notice that when obtaining two random pivots, we do not know the exact length of each partition, since they are not always equal and one can be further from the other or vice versa, therefore, we are going to represent the division of the list of length $ original n$ with a constant $a$, where $a > 1$ so, we will have that each recursive call will have as input $\frac{n}{a}$ (here we will be assuming that the divisions will be of equal size). Now, we know that each resulting sublist will call $improvingQuickSort$ 
+
+  recursively, so we'll denote this number of calls as $b$, where $b \leq 1$. The partition cost in the worst case is O(n). So, the recurrence relation is:
     
-  Now, let's look at the cost of partitioning the list, which takes **O(n)** in the worst case. Partitioning is the operation that divides the list into three sublists, one containing elements less than or equal to pivot #1, another containing elements greater than pivot #1 and less than or equal to pivot #2, and another containing elements greater than pivot #1. pivot #2. The partition cost in the worst case is O(n). So, the recurrence relation is:
-    
-  $$T(n) = T(q1) + T(q2-q1) + T(n-q2) + O(n)$$
+  $$T(n) = b(\frac{n}{a}) + O(n)$$
     
 
 ## Closest Points

@@ -51,14 +51,16 @@ We are going to find the temporal complexity of the three problems with the **Ma
     
   We found that its recurrence relation is:
     
-  **T(n) = T(q1) + T(q2-q1) + T(n-q2) + O(n)**
-    
+  **T(n) = b(\frac{n}{a}) + O(n)**
+
+  For practical purposes and in order to find the algorithmic complexity, we will assume that $a$ and $b$ have the same value. That is, $a=b$
+
   We define the necessary terms:
-    
-  **a** = 3 (three recursive calls)
-    
-  **b** = 3 (3 partitions, caused by 2 pivots)
-    
+
+  **a** = b
+
+  **b** = a
+
   **f(n)** = O(n)
     
   So, we evaluate each step of the Master Method:
@@ -67,7 +69,7 @@ We are going to find the temporal complexity of the three problems with the **Ma
         
         f(n) = O(n ^ log_{b} {a} - ε), ε > 0
         
-        O(n) = O(n ^ log_{3} 3 - ε)
+        O(n) = O(n ^ log_{a} {b} - ε)
         
         O(n) = O(n ^ 1 - ε) → NO, it isn’t fullfilled, since it doesn’t bound above (it is not greater)
         
@@ -76,14 +78,14 @@ We are going to find the temporal complexity of the three problems with the **Ma
         
         f(n) = Θ(n ^ log_{b} {a}) , ε > 0
         
-        O(n) = Θ(n ^ log_{3} {3})
+        O(n) = Θ(n ^ log_{a} {b})
         
         **O(n) = Θ(n ^ 1)** → YES, it’s fullfilled, because is narrowly bounded (they are equal)
         
     
   Then, the temporal complexity is:
     
-  **T(n) = Θ(n ^ log_{3} {3} log n)**
+  **T(n) = Θ(n ^ log_{a} {b} log n)**
     
   $$T(n) = Θ(n \log n)$$
     
