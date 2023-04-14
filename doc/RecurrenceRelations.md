@@ -38,9 +38,7 @@
     
   Now, let's look at the cases where n > 1. In these cases, first we will obtain the 2 random pivots, let's call their positions as **'q1' and 'q2' (in the future sorted list)**, where list(q1) < list(q2) (we make that verification in the algorithm), then, with these pivots, we will call the function 'randomized3WayPartition', which divides the list into three parts (those already mentioned above) and now we will call, for each resulting sublist (left, center, right), recursively again to 'improvingQuickSort'. 
 
-  So, we can notice that when obtaining two random pivots, we do not know the exact length of each partition, since they are not always equal and one can be further from the other or vice versa, therefore, we are going to represent the division of the list of length $ original n$ with a constant $a$, where $a > 1$ so, we will have that each recursive call will have as input $\frac{n}{a}$ (here we will be assuming that the divisions will be of equal size). Now, we know that each resulting sublist will call $improvingQuickSort$ 
-
-  recursively, so we'll denote this number of calls as $b$, where $b \leq 1$. The partition cost in the worst case is O(n). So, the recurrence relation is:
+  So, we can notice that when obtaining two random pivots, we do not know the exact length of each partition, since they are not always equal and one can be further from the other or vice versa, therefore, we are going to represent the division of the list of length $ original n$ with a constant $a$, where $a > 1$ so, we will have that each recursive call will have as input $\frac{n}{a}$ (here we will be assuming that the divisions will be of equal size). Now, we know that each resulting sublist will call $improvingQuickSort$ recursively, so we'll denote this number of calls as $b$, where $b \geq 1$. The partition cost in the worst case is O(n). So, the recurrence relation is:
     
   $$T(n) = b(\frac{n}{a}) + O(n)$$
     
