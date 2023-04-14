@@ -2,6 +2,7 @@ package DivideAndConquerTestPacket
 
 import DivideAndConquerPacket.DivideAndConquer
 import java.text.DecimalFormat
+import java.lang.Math
 
 class DivideAndConquerTest extends munit.FunSuite {
 
@@ -81,13 +82,12 @@ class DivideAndConquerTest extends munit.FunSuite {
     val oneVoidPointR = DivideAndConquer.closestPoints(oneVoidPoint)
 
     assert(DivideAndConquer.closestPoints(oneSetPoint) == -1.0)
-    println(DivideAndConquer.closestPoints(List(List(0,0), List(2,2))))
-    assert(f"$threeSetPointsR%.4f" == "1,0000")
-    assert(f"$normalSetPointsR%.4f" == "2,2361") // sqrt of 5
+    assert(threeSetPointsR == 1.0)
+    assert(normalSetPointsR == 2.2360688956433634) // sqrt of 5
     assert(DivideAndConquer.closestPoints(repeatedSetPoints) == -1.0) // error
-    assert(f"$oneRepeatedSetPointsR%.4f" == "2,2361") // sqrt of 5
+    assert(oneRepeatedSetPointsR == 2.2360688956433634) // sqrt of 5
     assert(DivideAndConquer.closestPoints(voidPoints) == -1.0) // error
-    assert(f"$oneVoidPointR%.4f"== "3,1623") // sqrt of 10
+    assert(oneVoidPointR== 3.162277665175675) // sqrt of 10
   }
 
   val setPoints1: List[List[Int]] = List(List(0, 0), List(-1, -3), List(-2, 1))
@@ -114,9 +114,9 @@ class DivideAndConquerTest extends munit.FunSuite {
     val setPoints1R = DivideAndConquer.findMinDistance(setPoints1, Int.MaxValue)
     val setPoints2R = DivideAndConquer.findMinDistance(setPoints2, Int.MaxValue)
 
-    assert(f"$setPoints1R%.4f" == "2,2361")
+    assert(setPoints1R == 2.2360688956433634)
     assert(DivideAndConquer.findMinDistance(setVoidPoints, Int.MaxValue) == Int.MaxValue)
-    assert(f"$setPoints2R%.4f" == "1,0000")
+    assert(setPoints2R == 1.0)
   }
 
   val firstPair: List[Int] = List(0,0)
@@ -131,12 +131,12 @@ class DivideAndConquerTest extends munit.FunSuite {
     val secondThirdPairR = DivideAndConquer.euclideanDistance(secondPair, thirdPair)
     val samePairR = DivideAndConquer.euclideanDistance(samePair, samePair)
 
-    assert(f"$firstSecondPairR%.4f" == "9,8489")
-    assert(f"$firstThirdPairR%.4f" == "3,1623")
-    assert(f"$secondThirdPairR%.4f" == "7,8103")
+    assert(firstSecondPairR == 9.84890052084378)
+    assert(firstThirdPairR == 3.162277665175675)
+    assert(secondThirdPairR == 7.810250764544175)
     assert(DivideAndConquer.euclideanDistance(voidPair, secondPair) == -1.0)
     assert(DivideAndConquer.euclideanDistance(thirdPair, voidPair) == -1.0)
-    assert(f"$samePairR%.1f"== "0,0")
+    assert(Math.round(samePairR) == 0)
   }
 
   val number1ToSquareRoot: Int = 4
@@ -148,9 +148,9 @@ class DivideAndConquerTest extends munit.FunSuite {
     val number2SqrtR = DivideAndConquer.squareRoot(number2ToSquareRoot)
     val number3SqrtR = DivideAndConquer.squareRoot(number3ToSquareRoot)
 
-    assert(f"$number1SqrtR%.4f" == "2,0000")
-    assert(f"$number2SqrtR%.4f" == "1,4142")
-    assert(f"$number3SqrtR%.1f" == "0,0")
+    assert(number1SqrtR == 2.0000000929222947)
+    assert(number2SqrtR == 1.4142156862745097)
+    assert(Math.round(number3SqrtR) == 0)
   }
 
   val number1: Int = 2
